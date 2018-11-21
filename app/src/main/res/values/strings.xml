@@ -2,8 +2,12 @@
     <string name="app_name">NostalgiApp</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_search">Cerca</string>
+
+    <string name="luigina">Luigina Mascherpa</string>
+    <string name="la_mia_nostalgiapp">La mia nostalgiApp</string>
+    <string name="miei_ex_colleghi">I miei ex colleghi</string>
+    <string name="foto_parlante">La foto parlante</string>
+    <string name="ricordi_ufficio">I ricordi dell\'ufficio</string>
+    <string name="oggi_esco_presto">Oggi esco presto</string>
 </resources>

@@ -5,34 +5,21 @@
 
     <group android:checkableBehavior="single">
         <item
-                android:id="@+id/nav_camera"
-                android:icon="@drawable/ic_menu_camera"
-                android:title="Import"/>
+                android:id="@+id/nav_miei_ex_colleghi"
+                android:icon="@drawable/ic_menu_miei_ex_colleghi"
+                android:title="@string/miei_ex_colleghi"/>
         <item
-                android:id="@+id/nav_gallery"
-                android:icon="@drawable/ic_menu_gallery"
-                android:title="Gallery"/>
+                android:id="@+id/nav_foto_parlante"
+                android:icon="@drawable/ic_menu_foto_parlante"
+                android:title="@string/foto_parlante"/>
         <item
-                android:id="@+id/nav_slideshow"
-                android:icon="@drawable/ic_menu_slideshow"
-                android:title="Slideshow"/>
+                android:id="@+id/nav_ricordi_ufficio"
+                android:icon="@drawable/ic_menu_ricordi_ufficio"
+                android:title="@string/ricordi_ufficio"/>
         <item
-                android:id="@+id/nav_manage"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="Tools"/>
+                android:id="@+id/nav_oggi_esco_presto"
+                android:icon="@drawable/ic_menu_oggi_esco_presto"
+                android:title="@string/oggi_esco_presto"/>
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                    android:id="@+id/nav_share"
-                    android:icon="@drawable/ic_menu_share"
-                    android:title="Share"/>
-            <item
-                    android:id="@+id/nav_send"
-                    android:icon="@drawable/ic_menu_send"
-                    android:title="Send"/>
-        </menu>
-    </item>
 
 </menu>

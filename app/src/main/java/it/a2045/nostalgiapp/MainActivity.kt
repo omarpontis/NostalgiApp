@@ -1,4 +1,4 @@
-package a2045.it.nostalgiapp
+package it.a2045.nostalgiapp
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -41,15 +41,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_search -> return true
             else -> return super.onOptionsItemSelected(item)
@@ -57,23 +53,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_miei_ex_colleghi -> {
-                // Handle the camera action
             }
             R.id.nav_foto_parlante -> {
-
             }
             R.id.nav_ricordi_ufficio -> {
-
             }
             R.id.nav_oggi_esco_presto -> {
-
             }
-
         }
-
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }

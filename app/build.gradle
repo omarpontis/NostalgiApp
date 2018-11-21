@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "a2045.it.nostalgiapp"
+        applicationId "it.a2045.nostalgiapp"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1

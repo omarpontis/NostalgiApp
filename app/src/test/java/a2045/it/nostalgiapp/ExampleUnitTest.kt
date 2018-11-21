@@ -1,4 +1,4 @@
-package a2045.it.nostalgiapp
+package it.a2045.nostalgiapp
 
 import org.junit.Test
 

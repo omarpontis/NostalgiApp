@@ -1,0 +1,42 @@
+{
+	"versione": 20181121,
+	"sezioni": [{
+		"nome": "ex_colleghi",
+		"contenuto": {
+			"list_array": [{
+				"nome": "Alberto",
+				"testo": "Luigina, ho vinto!",
+				"foto": "https://url.com/photos/alberto.png",
+				"audio": "https://url.com/audio/alberto.mp3"
+			}, {
+				"nome": "Davide",
+				"testo": "Luigina, mi hai lasciato solo su iOS",
+				"foto": "https://url.com/photos/davide.png",
+				"audio": "https://url.com/audio/davide.mp3"
+			}]
+		}
+	}, {
+		"nome": "foto_parlante",
+		"contenuto": {
+			"foto": "https://url.com/photos/foto_parlante.png",
+			"audio": "https://url.com/audio/foto_parlante.mp3"
+		}
+	}, {
+		"nome": "ricordi_ufficio",
+		"contenuto": {
+			"list_array": [{
+					"foto": "https://url.com/photos/telefono.png",
+					"audio": "https://url.com/audio/telefono.mp3"
+				},
+				{
+					"foto": "https://url.com/photos/freccette.png",
+					"audio": "https://url.com/audio/freccette.mp3"
+				},
+				{
+					"foto": "https://url.com/photos/caffe.png",
+					"audio": "https://url.com/audio/caffe.mp3"
+				}
+			]
+		}
+	}]
+}

@@ -3,8 +3,8 @@ package it.a2045.nostalgiapp
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -19,9 +19,10 @@ import com.beust.klaxon.Klaxon
 import com.beust.klaxon.Parser
 import it.a2045.nostalgiapp.models.Collega
 import it.a2045.nostalgiapp.models.DummyContent
+import it.a2045.nostalgiapp.models.FotoParlante
+import it.a2045.nostalgiapp.models.RicordoUfficio
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import java.io.InputStream
 
 fun Context.toast(message: CharSequence) =
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -30,6 +31,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     ExColleghiFragment.OnListFragmentInteractionListener {
 
     private val TAG = MainActivity::class.qualifiedName
+
+    private var mListaColleghi: List<Collega>? = null
+    private var mListaRicordi: List<RicordoUfficio>? = null
+    private var mFotoParlante: FotoParlante? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,53 +55,42 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        val parser = Parser()
+        parseJson()
 
-        val data : JsonObject = parser.parse(assets.open("config.json")) as JsonObject
-        val sezioni : JsonArray<JsonObject> = data["sezioni"] as JsonArray<JsonObject>
+    }
 
+    private fun parseJson() {
+        val data: JsonObject = Parser().parse(assets.open("config.json")) as JsonObject
+        @Suppress("UNCHECKED_CAST")
+        val sezioni = data["sezioni"] as JsonArray<JsonObject>
 
-        for((index,obj) in sezioni.withIndex()) {
-            println("Loop Iteration $index on each object")
-            if("ex_colleghi".equals(obj["nome"])){
-                val contenuto : JsonObject = obj["contenuto"] as JsonObject
-                val collegaArray : JsonArray<JsonObject> = contenuto["list_array"] as JsonArray<JsonObject>
-                Log.d(TAG, "collegaarray   $collegaArray")
+        val klaxon = Klaxon()
+        var listarray: JsonArray<JsonObject> = JsonArray()
+        var contenuto: JsonObject
+
+        sezioni.forEach {
+            contenuto = it["contenuto"] as JsonObject
+            if (contenuto.contains("list_array")) {
+                @Suppress("UNCHECKED_CAST")
+                listarray = contenuto["list_array"] as JsonArray<JsonObject>
             }
 
+            when (it["nome"]) {
+
+                "ex_colleghi" -> {
+                    mListaColleghi = klaxon.parseFromJsonArray(listarray)
+                    Log.d(TAG, "listaColleghi   $mListaColleghi")
+                }
+                "foto_parlante" -> {
+                    mFotoParlante = klaxon.parseFromJsonObject(contenuto)
+                    Log.d(TAG, "fotoParlante   $mFotoParlante")
+                }
+                "ricordi_ufficio" -> {
+                    mListaRicordi = klaxon.parseFromJsonArray(listarray)
+                    Log.d(TAG, "listaRicordi   $mListaRicordi")
+                }
+            }
         }
-
-//        for (i in 0..(sezioni.length() - 1)) {
-//            val sezione = sezioni.getJSONObject(i)
-
-//        val result = Klaxon()
-//            .parse<Collega>(readJSONFromAsset())
-//
-
-
-
-//        var jsonObject = JSONObject(readJSONFromAsset())
-//        Log.d(TAG, "jsonObject\n$jsonObject ")
-//
-//        var sezioni = jsonObject.getJSONArray("sezioni")
-//
-//        for (i in 0..(sezioni.length() - 1)) {
-//            val sezione = sezioni.getJSONObject(i)
-
-//            when (sezione.get("nome")) {
-//                "ex_colleghi" -> sezione.get("contenuto").
-//                "foto_parlante" -> Log.d(TAG, "foto_parlante")
-//                "ricordi_ufficio" -> Log.d(TAG, "ricordi_ufficio")
-//                else -> Log.d(TAG, "ALTRO!")
-//            }
-
-//        }
-
-//        var jsonArray = Gson().fromJson(sampleJson, Collega::class.java)
-//
-//        for (jsonIndex in 0..(jsonArray.size() - 1)) {
-//            Log.d("JSON2", jsonArray.getJSONObject(jsonIndex).getString("title"))
-//        }
     }
 
     override fun onBackPressed() {
@@ -143,18 +138,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onListFragmentInteraction(item: DummyContent.DummyItem?) {
-        toast("STO CAZZO!!")
+        toast("ITEM ${item?.id}")
     }
 
-    fun readJSONFromAsset(): String {
-        var json = ""
-        try {
-            val inputStream: InputStream = assets.open("config.json")
-            json = inputStream.bufferedReader().use { it.readText() }
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            return ""
-        }
-        return json
-    }
 }

@@ -18,7 +18,6 @@ import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Klaxon
 import com.beust.klaxon.Parser
 import it.a2045.nostalgiapp.models.Collega
-import it.a2045.nostalgiapp.models.DummyContent
 import it.a2045.nostalgiapp.models.FotoParlante
 import it.a2045.nostalgiapp.models.RicordoUfficio
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,12 +29,14 @@ fun Context.toast(message: CharSequence) =
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     ExColleghiFragment.OnListFragmentInteractionListener {
 
+    var mListaColleghi: List<Collega>? = null
+        private set
+    var mListaRicordi: List<RicordoUfficio>? = null
+        private set
+    var mFotoParlante: FotoParlante? = null
+        private set
+
     private val TAG = MainActivity::class.qualifiedName
-
-    private var mListaColleghi: List<Collega>? = null
-    private var mListaRicordi: List<RicordoUfficio>? = null
-    private var mFotoParlante: FotoParlante? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         parseJson()
+        selectItem(ExColleghiFragment.newInstance())
 
     }
 
@@ -137,8 +139,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onListFragmentInteraction(item: DummyContent.DummyItem?) {
-        toast("ITEM ${item?.id}")
+    override fun onListFragmentInteraction(item: Collega?) {
+        toast("ITEM ${item?.nome}\n${item?.testo}")
     }
 
 }

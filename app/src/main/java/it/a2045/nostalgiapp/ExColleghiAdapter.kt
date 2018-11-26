@@ -4,10 +4,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 
 
 import it.a2045.nostalgiapp.ExColleghiFragment.OnListFragmentInteractionListener
+import it.a2045.nostalgiapp.models.Collega
 import it.a2045.nostalgiapp.models.DummyContent.DummyItem
 
 import kotlinx.android.synthetic.main.fragment_ex_colleghi_item.view.*
@@ -18,15 +20,15 @@ import kotlinx.android.synthetic.main.fragment_ex_colleghi_item.view.*
  * TODO: Replace the implementation with code for your data type.
  */
 class ExColleghiAdapter(
-    private val mValues: List<DummyItem>,
     private val mListener: OnListFragmentInteractionListener?
 ) : RecyclerView.Adapter<ExColleghiAdapter.ViewHolder>() {
 
+    private var mValues: List<Collega>? = (mListener as MainActivity).mListaColleghi
     private val mOnClickListener: View.OnClickListener
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as DummyItem
+            val item = v.tag as Collega
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             mListener?.onListFragmentInteraction(item)
@@ -40,9 +42,12 @@ class ExColleghiAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = mValues[position]
-        holder.mIdView.text = item.id
-        holder.mContentView.text = item.content
+        val item = mValues!![position]
+//        holder.mIvFoto
+        holder.mTvName.text = item.nome
+        holder.mTvMessage.text = item.testo
+//    holder.mIvIcona
+
 
         with(holder.mView) {
             tag = item
@@ -50,14 +55,16 @@ class ExColleghiAdapter(
         }
     }
 
-    override fun getItemCount(): Int = mValues.size
+    override fun getItemCount(): Int = mValues!!.size
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mIdView: TextView = mView.item_number
-        val mContentView: TextView = mView.content
+        val mIvFoto: ImageView = mView.iv_foto
+        val mTvName: TextView = mView.tv_name
+        val mTvMessage: TextView = mView.tv_message
+        val mIvIcona: ImageView = mView.iv_icona
 
         override fun toString(): String {
-            return super.toString() + " '" + mContentView.text + "'"
+            return super.toString() + " '" + mTvName.text + "' " + mTvMessage.text + "'"
         }
     }
 }

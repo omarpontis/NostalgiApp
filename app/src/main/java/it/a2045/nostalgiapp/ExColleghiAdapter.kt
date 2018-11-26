@@ -10,15 +10,9 @@ import android.widget.TextView
 
 import it.a2045.nostalgiapp.ExColleghiFragment.OnListFragmentInteractionListener
 import it.a2045.nostalgiapp.models.Collega
-import it.a2045.nostalgiapp.models.DummyContent.DummyItem
 
 import kotlinx.android.synthetic.main.fragment_ex_colleghi_item.view.*
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
 class ExColleghiAdapter(
     private val mListener: OnListFragmentInteractionListener?
 ) : RecyclerView.Adapter<ExColleghiAdapter.ViewHolder>() {

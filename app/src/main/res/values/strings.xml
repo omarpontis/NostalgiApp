@@ -10,4 +10,7 @@
     <string name="foto_parlante">La foto parlante</string>
     <string name="ricordi_ufficio">I ricordi dell\'ufficio</string>
     <string name="oggi_esco_presto">Oggi esco presto</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

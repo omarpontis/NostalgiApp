@@ -121,10 +121,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 selectItem(ExColleghiFragment.newInstance())
             }
             R.id.nav_foto_parlante -> {
+                selectItem(FotoParlanteFragment.newInstance())
             }
             R.id.nav_ricordi_ufficio -> {
+                selectItem(RicordiUfficioFragment.newInstance())
             }
             R.id.nav_oggi_esco_presto -> {
+                selectItem(MappaFragment.newInstance())
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)

@@ -1,11 +1,14 @@
 package it.a2045.nostalgiapp
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 
 import it.a2045.nostalgiapp.ExColleghiFragment.OnListFragmentInteractionListener
@@ -37,11 +40,13 @@ class ExColleghiAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues!![position]
-//        holder.mIvFoto
         holder.mTvName.text = item.nome
         holder.mTvMessage.text = item.testo
-//    holder.mIvIcona
 
+        Glide.with(mListener as Context)
+            .load(item.foto)
+            .apply(RequestOptions.circleCropTransform())
+            .into(holder.mIvFoto)
 
         with(holder.mView) {
             tag = item
@@ -55,7 +60,6 @@ class ExColleghiAdapter(
         val mIvFoto: ImageView = mView.iv_foto
         val mTvName: TextView = mView.tv_name
         val mTvMessage: TextView = mView.tv_message
-        val mIvIcona: ImageView = mView.iv_icona
 
         override fun toString(): String {
             return super.toString() + " '" + mTvName.text + "' " + mTvMessage.text + "'"

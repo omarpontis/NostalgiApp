@@ -2,6 +2,7 @@ package it.a2045.nostalgiapp
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
@@ -17,17 +18,23 @@ import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Klaxon
 import com.beust.klaxon.Parser
+import com.github.kittinunf.fuel.httpGet
 import it.a2045.nostalgiapp.models.Collega
 import it.a2045.nostalgiapp.models.FotoParlante
 import it.a2045.nostalgiapp.models.RicordoUfficio
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import java.io.IOException
+
 
 fun Context.toast(message: CharSequence) =
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     ExColleghiFragment.OnListFragmentInteractionListener {
+
+    val URL = "http://jsonplaceholder.typicode.com/users"
+    val mMediaPlayer = MediaPlayer ()
 
     var mListaColleghi: List<Collega>? = null
         private set
@@ -56,9 +63,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
+        getRequest()
         parseJson()
         selectItem(ExColleghiFragment.newInstance())
 
+    }
+
+    private fun getRequest(){
+       URL.httpGet()
+            .responseString { request, response, result ->
+                Log.d(TAG, "omar result: ${result}")
+                Log.d(TAG, "omar request: ${request}")
+                Log.d(TAG, "omar response: ${response}")
+//                when (result) {
+//                    is Result -> {
+//                        val ex = result.getException()
+//                    }
+//                    is Result.Success -> {
+//                        val data = result.get()
+//                    }
+//                }
+            }
     }
 
     private fun parseJson() {
@@ -127,6 +152,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 selectItem(RicordiUfficioFragment.newInstance())
             }
             R.id.nav_oggi_esco_presto -> {
+//                val intent = Intent(this, MapsActivity::class.java)
+//                startActivity(intent)
                 selectItem(MappaFragment.newInstance())
             }
         }
@@ -144,6 +171,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onListFragmentInteraction(item: Collega?) {
         toast("ITEM ${item?.nome}\n${item?.testo}")
+        try {
+            if(mMediaPlayer.isPlaying){
+                mMediaPlayer.stop()
+                mMediaPlayer.reset()
+            }
+            mMediaPlayer.setDataSource (item?.audio)
+            mMediaPlayer.prepare ()
+            mMediaPlayer.start ()
+        } catch (e: IOException) {
+            Toast.makeText (this, "The file does not exist", Toast.LENGTH_LONG) .show ()
+        }
     }
+
+
 
 }

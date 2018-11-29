@@ -9,22 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import it.a2045.nostalgiapp.models.Collega
 
-/**
- * A fragment representing a list of Items.
- * Activities containing this fragment MUST implement the
- * [ExColleghiFragment.OnListFragmentInteractionListener] interface.
- */
 class ExColleghiFragment : Fragment() {
 
     private var listener: OnListFragmentInteractionListener? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-//        arguments?.let {
-//            columnCount = it.getInt(ARG_COLUMN_COUNT)
-//        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,14 +19,8 @@ class ExColleghiFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_ex_colleghi, container, false)
 
-        // Set the adapter
         if (view is RecyclerView) {
             with(view) {
-//                layoutManager = when {
-//                    columnCount <= 1 -> LinearLayoutManager(context)
-//                    else -> GridLayoutManager(context, columnCount)
-//                }
-
                 adapter = ExColleghiAdapter(listener)
             }
         }
@@ -61,33 +42,13 @@ class ExColleghiFragment : Fragment() {
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson
-     * [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
     interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onListFragmentInteraction(item: Collega?)
     }
 
     companion object {
-
-//            const val ARG_COLLEGHI_LIST = "colleghi_list"
-
         @JvmStatic
         fun newInstance() =
-            ExColleghiFragment().apply {
-//                arguments = Bundle().apply {
-//                    putParcelableArrayList(ARG_COLLEGHI_LIST, listaColleghi)
-//                }
-            }
-
+            ExColleghiFragment().apply {}
     }
 }

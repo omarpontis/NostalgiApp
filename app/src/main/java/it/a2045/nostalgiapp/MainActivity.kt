@@ -19,6 +19,12 @@ import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Klaxon
 import com.beust.klaxon.Parser
 import com.github.kittinunf.fuel.httpGet
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import it.a2045.nostalgiapp.models.Collega
 import it.a2045.nostalgiapp.models.FotoParlante
 import it.a2045.nostalgiapp.models.RicordoUfficio
@@ -27,14 +33,16 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import java.io.IOException
 
 
-fun Context.toast(message: CharSequence) =
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-    ExColleghiFragment.OnListFragmentInteractionListener {
+    ExColleghiFragment.OnListFragmentInteractionListener, OnMapReadyCallback,
+    FotoParlanteFragment.OnFabInteractionListener, RicordiUfficioFragment.OnRicordiUfficioFragmentInteractionListener {
 
-    val URL = "http://jsonplaceholder.typicode.com/users"
-    val mMediaPlayer = MediaPlayer ()
+    private lateinit var mMap: GoogleMap
+    private lateinit var mapFragment: SupportMapFragment
+
+    //    val URL_json =  "https://zeppelin.iptvng.eu.org/embedded/nsapp/config.json"
+    val URL_json = "http://jsonplaceholder.typicode.com/users"
+    val mMediaPlayer = MediaPlayer()
 
     var mListaColleghi: List<Collega>? = null
         private set
@@ -50,11 +58,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
@@ -69,8 +72,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    private fun getRequest(){
-       URL.httpGet()
+    private fun getRequest() {
+        URL_json.httpGet()
             .responseString { request, response, result ->
                 Log.d(TAG, "omar result: ${result}")
                 Log.d(TAG, "omar request: ${request}")
@@ -128,18 +131,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_search -> return true
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_miei_ex_colleghi -> {
@@ -152,9 +143,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 selectItem(RicordiUfficioFragment.newInstance())
             }
             R.id.nav_oggi_esco_presto -> {
-//                val intent = Intent(this, MapsActivity::class.java)
-//                startActivity(intent)
-                selectItem(MappaFragment.newInstance())
+                mapFragment = SupportMapFragment.newInstance()
+                mapFragment.getMapAsync(this)
+
+                selectItem(mapFragment)
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)
@@ -169,21 +161,142 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    override fun onListFragmentInteraction(item: Collega?) {
-        toast("ITEM ${item?.nome}\n${item?.testo}")
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+
+
+        val torino = LatLng(45.069074, 7.686587)
+        val casaLuigina = LatLng(45.002732, 7.659876)
+        val lavoro = LatLng(45.112143, 7.6761608)
+        mMap.addMarker(MarkerOptions().position(casaLuigina).title("Casa"))
+        mMap.addMarker(MarkerOptions().position(lavoro).title("T-Lab"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(torino))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(casaLuigina, 5f))
+
+        getDirectionURL(casaLuigina, lavoro).httpGet()
+            .responseString { request, response, result ->
+                Log.d(TAG, "omarMap result: ${result}")
+                Log.d(TAG, "omarMap request: ${request}")
+                Log.d(TAG, "omarMap response: ${response}")
+//                when (result) {
+//                    is Result -> {
+//                        val ex = result.getException()
+//                    }
+//                    is Result.Success -> {
+//                        val data = result.get()
+//                    }
+//                }
+            }
+
+    }
+
+    fun playAudio(path: String?) {
         try {
-            if(mMediaPlayer.isPlaying){
+            if (mMediaPlayer.isPlaying) {
                 mMediaPlayer.stop()
                 mMediaPlayer.reset()
             }
-            mMediaPlayer.setDataSource (item?.audio)
-            mMediaPlayer.prepare ()
-            mMediaPlayer.start ()
+            mMediaPlayer.setDataSource(path)
+            mMediaPlayer.prepare()
+            mMediaPlayer.start()
         } catch (e: IOException) {
-            Toast.makeText (this, "The file does not exist", Toast.LENGTH_LONG) .show ()
+            Toast.makeText(this, "The file does not exist", Toast.LENGTH_LONG).show()
         }
     }
 
+    override fun onFabClick(audio: String?) {
+        playAudio(audio)
+    }
 
+    override fun onListFragmentInteraction(item: Collega?) {
+        playAudio(item?.audio)
+    }
+
+    override fun onRicordoUfficioInteraction(item: RicordoUfficio?) {
+        playAudio(item?.audio)
+    }
+
+    fun getDirectionURL(origin: LatLng, dest: LatLng): String {
+        return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${dest.latitude},${dest.longitude}&sensor=false&mode=driving&key=${getString(
+            R.string.google_maps_key
+        )}"
+    }
+
+//    private inner class GetDirection(val url : String) : AsyncTask<Void,Void,List<List<LatLng>>>(){
+//        override fun doInBackground(vararg params: Void?): List<List<LatLng>> {
+//            val client = OkHttpClient()
+//            val request = Request.Builder().url(url).build()
+//            val response = client.newCall(request).execute()
+//            val data = response.body()!!.string()
+//            Log.d("GoogleMap" , " data : $data")
+//            val result =  ArrayList<List<LatLng>>()
+//            try{
+//                val respObj = Gson().fromJson(data,GoogleMapDTO::class.java)
+//
+//                val path =  ArrayList<LatLng>()
+//
+//                for (i in 0..(respObj.routes[0].legs[0].steps.size-1)){
+////                    val startLatLng = LatLng(respObj.routes[0].legs[0].steps[i].start_location.lat.toDouble()
+////                            ,respObj.routes[0].legs[0].steps[i].start_location.lng.toDouble())
+////                    path.add(startLatLng)
+////                    val endLatLng = LatLng(respObj.routes[0].legs[0].steps[i].end_location.lat.toDouble()
+////                            ,respObj.routes[0].legs[0].steps[i].end_location.lng.toDouble())
+//                    path.addAll(decodePolyline(respObj.routes[0].legs[0].steps[i].polyline.points))
+//                }
+//                result.add(path)
+//            }catch (e:Exception){
+//                e.printStackTrace()
+//            }
+//            return result
+//        }
+//
+//        override fun onPostExecute(result: List<List<LatLng>>) {
+//            val lineoption = PolylineOptions()
+//            for (i in result.indices){
+//                lineoption.addAll(result[i])
+//                lineoption.width(10f)
+//                lineoption.color(Color.BLUE)
+//                lineoption.geodesic(true)
+//            }
+//            googleMap.addPolyline(lineoption)
+//        }
+//    }
+
+    public fun decodePolyline(encoded: String): List<LatLng> {
+
+        val poly = ArrayList<LatLng>()
+        var index = 0
+        val len = encoded.length
+        var lat = 0
+        var lng = 0
+
+        while (index < len) {
+            var b: Int
+            var shift = 0
+            var result = 0
+            do {
+                b = encoded[index++].toInt() - 63
+                result = result or (b and 0x1f shl shift)
+                shift += 5
+            } while (b >= 0x20)
+            val dlat = if (result and 1 != 0) (result shr 1).inv() else result shr 1
+            lat += dlat
+
+            shift = 0
+            result = 0
+            do {
+                b = encoded[index++].toInt() - 63
+                result = result or (b and 0x1f shl shift)
+                shift += 5
+            } while (b >= 0x20)
+            val dlng = if (result and 1 != 0) (result shr 1).inv() else result shr 1
+            lng += dlng
+
+            val latLng = LatLng((lat.toDouble() / 1E5), (lng.toDouble() / 1E5))
+            poly.add(latLng)
+        }
+
+        return poly
+    }
 
 }

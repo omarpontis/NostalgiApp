@@ -3,7 +3,10 @@ package it.a2045.nostalgiapp
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.StaggeredGridLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,11 +24,8 @@ class RicordiUfficioFragment : Fragment() {
 
         if (view is RecyclerView) {
             with(view) {
-                //                layoutManager = when {
-//                    columnCount <= 1 -> LinearLayoutManager(context)
-//                    else -> GridLayoutManager(context, columnCount)
-//                }
-
+                layoutManager = GridLayoutManager(context,2)
+                setHasFixedSize(true)
                 adapter = RicordiUfficioAdapter(listener)
             }
         }
@@ -49,6 +49,7 @@ class RicordiUfficioFragment : Fragment() {
 
     interface OnRicordiUfficioFragmentInteractionListener {
         fun onRicordoUfficioInteraction(item: RicordoUfficio?)
+        fun stopAudio()
     }
 
     companion object {
@@ -56,4 +57,10 @@ class RicordiUfficioFragment : Fragment() {
         fun newInstance() =
             RicordiUfficioFragment().apply {}
     }
+
+    override fun onPause() {
+        listener?.stopAudio()
+        super.onPause()
+    }
+
 }

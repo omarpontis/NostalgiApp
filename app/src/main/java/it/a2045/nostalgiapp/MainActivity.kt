@@ -1,23 +1,21 @@
 package it.a2045.nostalgiapp
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Klaxon
 import com.beust.klaxon.Parser
+import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.httpGet
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -30,23 +28,22 @@ import it.a2045.nostalgiapp.models.FotoParlante
 import it.a2045.nostalgiapp.models.RicordoUfficio
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import java.io.IOException
-
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     ExColleghiFragment.OnListFragmentInteractionListener, OnMapReadyCallback,
-    FotoParlanteFragment.OnFabInteractionListener, RicordiUfficioFragment.OnRicordiUfficioFragmentInteractionListener {
+    FotoParlanteFragment.OnFotoParlanteInteractionListener,
+    RicordiUfficioFragment.OnRicordiUfficioFragmentInteractionListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var mapFragment: SupportMapFragment
 
-    //    val URL_json =  "https://zeppelin.iptvng.eu.org/embedded/nsapp/config.json"
-    val URL_json = "http://jsonplaceholder.typicode.com/users"
-    val mMediaPlayer = MediaPlayer()
+    private val URL_json = "https://zeppelin.iptvng.eu.org/embedded/nsapp/config.json"
+    //    private val URL_json = "http://jsonplaceholder.typicode.com/users"
+    private val mMediaPlayer = MediaPlayer()
 
-    var mListaColleghi: List<Collega>? = null
+    var mListaColleghi: List<Collega>? = emptyList()
         private set
-    var mListaRicordi: List<RicordoUfficio>? = null
+    var mListaRicordi: List<RicordoUfficio>? = emptyList()
         private set
     var mFotoParlante: FotoParlante? = null
         private set
@@ -67,17 +64,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         getRequest()
-        parseJson()
+//        parseJson()
         selectItem(ExColleghiFragment.newInstance())
-
     }
 
     private fun getRequest() {
         URL_json.httpGet()
-            .responseString { request, response, result ->
+            .responseJson { request, response, result ->
                 Log.d(TAG, "omar result: ${result}")
                 Log.d(TAG, "omar request: ${request}")
                 Log.d(TAG, "omar response: ${response}")
+
+                parseJson(result.get().content)
 //                when (result) {
 //                    is Result -> {
 //                        val ex = result.getException()
@@ -89,8 +87,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
     }
 
-    private fun parseJson() {
-        val data: JsonObject = Parser().parse(assets.open("config.json")) as JsonObject
+    private fun parseJson(jsonString: String) {
+//        val data: JsonObject = Parser().parse(assets.open("config.json")) as JsonObject
+        val data: JsonObject = Parser().parse(jsonString.byteInputStream()) as JsonObject
+
         @Suppress("UNCHECKED_CAST")
         val sezioni = data["sezioni"] as JsonArray<JsonObject>
 
@@ -126,13 +126,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
+//        } else if (supportFragmentManager.backStackEntryCount ) {
         } else {
             super.onBackPressed()
         }
     }
 
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+
             R.id.nav_miei_ex_colleghi -> {
                 selectItem(ExColleghiFragment.newInstance())
             }
@@ -157,6 +160,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun selectItem(fragment: Fragment) {
         supportFragmentManager.beginTransaction().run {
             replace(R.id.content_frame, fragment)
+//            addToBackStack(null)
             commit()
         }
     }
@@ -191,16 +195,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun playAudio(path: String?) {
+
+        stopAudio()
         try {
-            if (mMediaPlayer.isPlaying) {
-                mMediaPlayer.stop()
-                mMediaPlayer.reset()
-            }
+            mMediaPlayer.reset()
             mMediaPlayer.setDataSource(path)
             mMediaPlayer.prepare()
             mMediaPlayer.start()
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             Toast.makeText(this, "The file does not exist", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun stopAudio() {
+        if (mMediaPlayer.isPlaying) {
+            mMediaPlayer.stop()
         }
     }
 
@@ -298,5 +307,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         return poly
     }
+
 
 }

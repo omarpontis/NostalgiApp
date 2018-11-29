@@ -44,6 +44,7 @@ class ExColleghiFragment : Fragment() {
 
     interface OnListFragmentInteractionListener {
         fun onListFragmentInteraction(item: Collega?)
+        fun stopAudio()
     }
 
     companion object {
@@ -51,4 +52,10 @@ class ExColleghiFragment : Fragment() {
         fun newInstance() =
             ExColleghiFragment().apply {}
     }
+
+    override fun onPause() {
+        listener?.stopAudio()
+        super.onPause()
+    }
+
 }

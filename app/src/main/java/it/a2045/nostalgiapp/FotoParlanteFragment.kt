@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +18,12 @@ import java.net.URI
 
 class FotoParlanteFragment : Fragment() {
 
-    private var listener: OnFabInteractionListener? = null
+    private var listener: OnFotoParlanteInteractionListener? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        if (context is OnFabInteractionListener) {
+        if (context is OnFotoParlanteInteractionListener) {
             listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnFabInteractionListener")
@@ -54,8 +55,9 @@ class FotoParlanteFragment : Fragment() {
         return  inflater.inflate(R.layout.fragment_foto_parlante, container, false)
     }
 
-    interface OnFabInteractionListener {
+    interface OnFotoParlanteInteractionListener {
         fun onFabClick(audio: String?)
+        fun stopAudio()
     }
 
     companion object {
@@ -63,4 +65,10 @@ class FotoParlanteFragment : Fragment() {
         fun newInstance() =
             FotoParlanteFragment().apply {}
     }
+
+    override fun onPause() {
+        listener?.stopAudio()
+        super.onPause()
+    }
+
 }

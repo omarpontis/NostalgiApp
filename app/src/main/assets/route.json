@@ -1,0 +1,353 @@
+{
+  "geocoded_waypoints": [
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJO__am2ASiEcRbh85M1BU9iE",
+      "types": [
+        "street_address"
+      ]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJ09LGBtRtiEcRJfKG58BA9dU",
+      "types": [
+        "street_address"
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "bounds": {
+        "northeast": {
+          "lat": 45.1310189,
+          "lng": 7.670353700000001
+        },
+        "southwest": {
+          "lat": 45.00155350000001,
+          "lng": 7.5434352
+        }
+      },
+      "copyrights": "Dati mappa ©2018 Google",
+      "legs": [
+        {
+          "distance": {
+            "text": "29,1 km",
+            "value": 29108
+          },
+          "duration": {
+            "text": "27 min",
+            "value": 1608
+          },
+          "end_address": "Via Arrigo Olivetti, 6, 10148 Torino TO, Italia",
+          "end_location": {
+            "lat": 45.1124765,
+            "lng": 7.670353700000001
+          },
+          "start_address": "Via dei Martiri, 22, 10042 Nichelino TO, Italia",
+          "start_location": {
+            "lat": 45.0021566,
+            "lng": 7.658212
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "0,2 km",
+                "value": 208
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 51
+              },
+              "end_location": {
+                "lat": 45.0020923,
+                "lng": 7.6555737
+              },
+              "html_instructions": "Procedi in direzione <b>ovest</b> da <b>Via dei Martiri</b> verso <b>Via Sassari</b>",
+              "polyline": {
+                "points": "ontqGyvvm@@d@DtC@~B?j@@|A@hA"
+              },
+              "start_location": {
+                "lat": 45.0021566,
+                "lng": 7.658212
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "1,2 km",
+                "value": 1167
+              },
+              "duration": {
+                "text": "3 min",
+                "value": 164
+              },
+              "end_location": {
+                "lat": 45.0017323,
+                "lng": 7.6408342
+              },
+              "html_instructions": "Continua su <b>Via XXV Aprile</b><div style=\"font-size:0.9em\">Attraversa la rotonda</div>",
+              "polyline": {
+                "points": "antqGifvm@BxABhC?xCBbA?\\@vA?dCBrB?LDzF?fAA??@A?A??@A??@?@A??@?@A??@?@?@?@?@?@?@?@?@@??@?@@??@@@@??@@?@??@FlBBnF@n@@pCDxCAzAD|E?nBBpBBjCDpBDnEATBZ"
+              },
+              "start_location": {
+                "lat": 45.0020923,
+                "lng": 7.6555737
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0,6 km",
+                "value": 621
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 67
+              },
+              "end_location": {
+                "lat": 45.0016113,
+                "lng": 7.633009
+              },
+              "html_instructions": "Alla rotonda, prendi la <b>2ª</b> uscita e rimani su <b>Via XXV Aprile</b>",
+              "maneuver": "roundabout-right",
+              "polyline": {
+                "points": "yktqGejsm@A??@A@?@A??@?@A@?@?@?BA@?@?@?@?B?@?@@@?B@B?@@@?@@@?@@@?@?V?J?D?D?D?B?@@DBhD@dDDnD@\\?|@@fAH`L@d@BbD@dBCPADEN"
+              },
+              "start_location": {
+                "lat": 45.0017323,
+                "lng": 7.6408342
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0,9 km",
+                "value": 869
+              },
+              "duration": {
+                "text": "2 min",
+                "value": 95
+              },
+              "end_location": {
+                "lat": 45.0065693,
+                "lng": 7.6255316
+              },
+              "html_instructions": "Alla <b>Largo delle Alpi</b> prendi la <b>1ª</b> uscita e prendi <b>Via dei Cacciatori</b><div style=\"font-size:0.9em\">Attraversa la rotonda</div>",
+              "maneuver": "roundabout-right",
+              "polyline": {
+                "points": "aktqGiyqm@GBIDIFGHEHELA@QDI?MAOEg@Kq@?M@_@B_@LMHSHSPOPWVe@v@a@r@Qh@e@tAuBlFeAfCiAnCMXIR_@~@i@rAWbASx@GZGZCPCZA?A?A??@A??@A??@?@A??@?@?@?@?@?@?@@??@?@@??@_@bBGLKXEJ"
+              },
+              "start_location": {
+                "lat": 45.0016113,
+                "lng": 7.633009
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0,5 km",
+                "value": 533
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 74
+              },
+              "end_location": {
+                "lat": 45.0087087,
+                "lng": 7.619749
+              },
+              "html_instructions": "Alla rotonda, prendi la <b>1ª</b> uscita e rimani su <b>Via dei Cacciatori</b><div style=\"font-size:0.9em\">Attraversa la rotonda</div>",
+              "maneuver": "roundabout-right",
+              "polyline": {
+                "points": "ajuqGqjpm@CAA?A?A@A?C?A@A?A@A@A@A@A@A@?BA@AB?BA@?B?@AB?@?B?B?@@B?@?B@@?B@@?@@@@B@@@@AVCRALc@rAWx@iAnC}@lCa@|@OXGNA@A??@A?A@A@A@?@A@A@?@?@A??@?@A@?@?@?@?@ELOjA{@hEMj@Kn@Gj@CT"
+              },
+              "start_location": {
+                "lat": 45.0065693,
+                "lng": 7.6255316
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "21,7 km",
+                "value": 21722
+              },
+              "duration": {
+                "text": "13 min",
+                "value": 809
+              },
+              "end_location": {
+                "lat": 45.1267248,
+                "lng": 7.662147900000001
+              },
+              "html_instructions": "Prendi lo svincolo per la <b>A55</b>",
+              "polyline": {
+                "points": "mwuqGmfom@GfACPKn@Ij@S|@Qx@IXOr@Q|@Q`AKx@K~@Gx@El@IlAIhBAP?^Fr@YfGCj@GtAKpB[zFIrAOpBUnBe@`Dq@|C[lAg@~A[z@]z@e@dAq@vAw@rAaAxAw@bAeAjAaA|@y@p@}@l@sAz@_Ab@_A`@aA\\_AVcAZaCv@wCbAaA^_@NcCfAg@ZwEjC}E|CCBs@j@kCnB_Ax@c@^A@KHsBdByAjAc@`@sFrE]X_@Zo@h@{AjA_@ZA?CBCBs@h@_Av@mErDaAx@OJMJA@eCpBiBzAcA|@[Xe@f@WVw@z@aBzBy@nA[h@[h@}@hBo@xAYt@_@dAa@fAa@xAQj@[nAUfAWtA]fBs@~Dg@jCe@jCoB|KY~Ak@zC[bBg@tCc@`Ck@zCm@nD]jBUpAY|Ac@fCe@fC}@`FY~AiAhGQ|@?DETOt@QbAiFxYcAvFw@jEcC`Nw@jEEZI^O|@[bB{AnIi@rC_@hBOp@Sv@g@bBW|@Wt@Qf@MXWr@]r@Yl@S`@i@dA_@n@m@`Aq@`Ac@j@_@f@i@j@ST]\\i@h@_@\\[Vk@b@[V]Tg@\\i@Ze@Vg@Va@Rg@R}@\\cA\\e@JIB]HoBf@cJzBeB`@SFE@YFuCr@gHdBsBh@m\\fIYFYF}Bl@gB`@uB^w@Fe@Bo@Bq@Bs@Aw@Aq@E[AWEi@GcAQkAUq@MsAWoBa@k@MoJqByA[uHaBo@OUEaB]u@Qw@OsBa@wBi@g@Ke@KoMkC_@I_@ISESGaCe@eGwAqBc@[GKCWGoDm@yDy@i@M_@M_@O[OUOSOWWW[e@q@q@gASc@MYQm@K[Mc@Mi@EYCSs@eEc@aCo@oCU}@Qg@Y}@_AgC{@wBe@aA_@q@u@wAQWa@o@sG{ImCsDy@kAkCkDwBwCkBgC_CcD{AsBsAiBoAeB_AmA}@kAW]aDkEIKIKIMaAsAyHmKgHwJkCkD[c@y@kAc@q@{@uAa@u@w@}Ak@mAO]O[?C_AaC_@cAW}@[cAYcAKa@Mi@WiAEUEUeBgJWwAUkAiEwUkAuGi@aDg@mCqAiHEUUkAs@aEcIoc@CQA?CQe@kCkDsRiAcGSmA_@qBEUCOCIGYi@iCgA}Ey@_Dw@yCo@yB]gAWw@k@iBeAwCwA_E_DoIiDgJuD{JIUIUg@sAgDaJoJiW_AcCy@}Bw@uBi@_Bi@eBUo@q@{Bq@_CaAsDk@}Be@sBGWa@eBg@aCk@gC}@_Eu@iDS_Ag@}Bo@qC[uAy@yDu@iDu@aDc@sBeC{KkAmFi@eC}@aEmAsFeA{EuCmMyQaz@UcAy@mDuAqGk@kDQsAScBSuBCOM}AM}BEy@C}@"
+              },
+              "start_location": {
+                "lat": 45.0087087,
+                "lng": 7.619749
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0,6 km",
+                "value": 574
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 40
+              },
+              "end_location": {
+                "lat": 45.12812520000001,
+                "lng": 7.6605851
+              },
+              "html_instructions": "Prendi l'uscita <b>Borgaro</b> verso <b>Borgaro</b>/<b>Torino</b>/<b>Venaria Reale Nord</b>",
+              "maneuver": "ramp-right",
+              "polyline": {
+                "points": "_ylrGmowm@Ja@@E?E@W@Q@Q@O@KBMDMHQFKHMHGHGJERCLAJ@L@FBJDJHLNJPFLDRDP@N@P@PAR?NALCPCNGRCJIRKRUVSLQJqAb@[Jg@RcCt@cCv@"
+              },
+              "start_location": {
+                "lat": 45.1267248,
+                "lng": 7.662147900000001
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0,1 km",
+                "value": 101
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 6
+              },
+              "end_location": {
+                "lat": 45.1289682,
+                "lng": 7.660094999999999
+              },
+              "html_instructions": "Continua su <b>Strada Provinciale 501 della Reggia</b>/<b>SP501</b>",
+              "polyline": {
+                "points": "yamrGuewm@k@Tg@Ta@Rg@ZIF"
+              },
+              "start_location": {
+                "lat": 45.12812520000001,
+                "lng": 7.6605851
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0,2 km",
+                "value": 225
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 19
+              },
+              "end_location": {
+                "lat": 45.1305723,
+                "lng": 7.6584425
+              },
+              "html_instructions": "Prendi lo svincolo per <b>Torino Centro</b>/<b>Borgaro</b>",
+              "polyline": {
+                "points": "agmrGqbwm@YDA??@mAbAsAhAw@n@KNIJKTIZITELMP"
+              },
+              "start_location": {
+                "lat": 45.1289682,
+                "lng": 7.660094999999999
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "2,4 km",
+                "value": 2375
+              },
+              "duration": {
+                "text": "3 min",
+                "value": 186
+              },
+              "end_location": {
+                "lat": 45.1114551,
+                "lng": 7.663434
+              },
+              "html_instructions": "Alla rotonda prendi la <b>4ª</b> uscita e prendi <b>Strada Aeroporto</b>",
+              "maneuver": "roundabout-right",
+              "polyline": {
+                "points": "aqmrGgxvm@E?E?C@E@C@E@C@EBEBCDEBCDCDCFCDCFAFCFAHAF?FAH?H?F@PBPBNDNFLHJHHHDDBD@B@B@D?B?D?B@BAB?BAB?BA@AB?BADCBCDEBCDEBEBEBEP?P?V?JEPITO~@w@p@k@r@g@d@SzAm@~@WTIjBk@`Bg@RGXI`@KXI@AhBi@dJmC`@KvA_@@AXIvBm@lBs@lBc@LC|@Eh@Bn@J|FbArAVt@F`@@b@Cf@Eb@Kf@Q`@SFEVOTMj@]h@[j@Y|@c@v@YbCq@`Be@z@UtBi@hAWtBi@bCg@hAUdAOT?H@"
+              },
+              "start_location": {
+                "lat": 45.1305723,
+                "lng": 7.6584425
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0,6 km",
+                "value": 559
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 70
+              },
+              "end_location": {
+                "lat": 45.1111082,
+                "lng": 7.670033500000001
+              },
+              "html_instructions": "Svolta a <b>sinistra</b> e prendi <b>Via Reiss Romoli</b>",
+              "maneuver": "turn-left",
+              "polyline": {
+                "points": "syirGmwwm@ZHb@ADSP{B?k@?c@@wBAq@Ae@C{G?gBK{N"
+              },
+              "start_location": {
+                "lat": 45.1114551,
+                "lng": 7.663434
+              },
+              "travel_mode": "DRIVING"
+            },
+            {
+              "distance": {
+                "text": "0,2 km",
+                "value": 154
+              },
+              "duration": {
+                "text": "1 min",
+                "value": 27
+              },
+              "end_location": {
+                "lat": 45.1124765,
+                "lng": 7.670353700000001
+              },
+              "html_instructions": "Svolta a <b>sinistra</b> e prendi <b>Via Arrigo Olivetti</b><div style=\"font-size:0.9em\">La tua destinazione è sulla destra</div>",
+              "maneuver": "turn-left",
+              "polyline": {
+                "points": "mwirGu`ym@Q?_G_A"
+              },
+              "start_location": {
+                "lat": 45.1111082,
+                "lng": 7.670033500000001
+              },
+              "travel_mode": "DRIVING"
+            }
+          ],
+          "traffic_speed_entry": [
+          ],
+          "via_waypoint": [
+          ]
+        }
+      ],
+      "overview_polyline": {
+        "points": "ontqGyvvm@HfJJjKDrIHbOAhAA?C@CH?HFN@?@@FlBBnFB`EBtFDlIF|FLrJCDEN@RFP?n@@PDnIFlELlQDhGEVENGBSLMRGN[DMAOEg@Kq@?m@Dm@Vg@Zg@h@gAjBw@~B{DtJaC|Fi@rAWbA[tAOhAA?A?A?CBAD@J@D_@bBSf@IHC?IBGDKT?XFTBBEj@e@`BaBhE}@lCa@|@Wh@CBIHELEROjA{@hEYzAK`AKxAUzAe@vBYlAc@~BWxBMfBUhFFr@YfGK`Cg@lJYdE{@pGmAjFcAzCcA`CiBjDyB|CeAjAaA|@wB~AsAz@_Ab@aC~@cCr@yGzBaBn@cCfAg@ZwEjC}E|Cw@n@qFjE_RpOaCjBeIxGaBrAoFlE_BvA}@~@w@z@aBzBuAxByArCiAnCaAlCs@dCq@vCqChO{EdXoGb^cGt\\iQ`bAqCpOiA|Fc@hBiB~F}AnD}@fBmApBuAlBiArA{BzBaChBqAx@mAn@iAf@aCz@}D`AcNfDmp@bPeFnAuB^w@FuAFeB@iBGs@GmBY}Bc@_RyDuMsCcIaB_Du@uNwCgBa@aCe@eGwAmCk@c@KoDm@yDy@iA[{@_@i@_@o@s@wAyBa@}@]iA[mAaBuJeAmEk@eB{B_GeAsBgAoBuHkKkMcQ{KiOeF}Go^wf@uAoB_BgCyAsC{@kBoBeFs@aCe@eBq@_D}Icf@cSchAyIgf@UiAqBgJqByHmAaEcAaD}CwIiIwTqF{NqSmj@aBuE_AuCcB{FmBqHwBsJsDqPcM{j@ma@yjBoC_M}@_Gg@yEQmBSwDC}@Ja@@KBi@H{@N_@PYRO^IX?TDVNX`@L`@F`@@fAQbAM^a@j@e@XmBn@{IvCiAh@q@b@[DmAdAkCxBUZe@tAMPE?I@SFUPOXK`@Cb@@XF`@L\\RTXLR@NALCROPUBEP?h@?\\OtAgAdBsA`CaAbHuBhBg@~U_HlBs@lBc@jAIxANpIzAvAHjAIjA]h@YbCwAhB}@zDkA|C{@~DaAtBi@bCg@nCe@^@ZHb@AVoC?oAEkNKcRQ?_G_A"
+      },
+      "summary": "A55",
+      "warnings": [
+      ],
+      "waypoint_order": [
+      ]
+    }
+  ],
+  "status": "OK"
+}

@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
@@ -48,6 +49,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     var mFotoParlante: FotoParlante? = null
         private set
 
+    lateinit var dialog: AlertDialog
+
     private val TAG = MainActivity::class.qualifiedName
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,21 +70,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun getRequest() {
-        URLJson.httpGet()
-            .responseJson { _, _, result ->
-                val (json, error) = result
-                if (json != null) {
-                    parseJson(json.content)
-                    selectItem(ExColleghiFragment.newInstance())
-                } else {
-                    showAlert(error?.exception?.message)
+        showProgressDialog()
+        Thread {
+            URLJson.httpGet()
+                .responseJson { _, _, result ->
+                    val (json, error) = result
+                    dialog.dismiss()
+                    if (json != null) {
+                        parseJson(json.content)
+                        selectItem(ExColleghiFragment.newInstance())
+                    } else {
+                        showAlert(error?.exception?.message)
+                    }
                 }
-            }
+        }.start()
     }
 
     private fun parseJson(jsonString: String) {
-        val data: JsonObject = Parser().parse(assets.open("config.json")) as JsonObject
-//        val data: JsonObject = Parser().parse(jsonString.byteInputStream()) as JsonObject
+//        val data: JsonObject = Parser().parse(assets.open("config.json")) as JsonObject
+        val data: JsonObject = Parser().parse(jsonString.byteInputStream()) as JsonObject
 
         @Suppress("UNCHECKED_CAST")
         val sezioni = data["sezioni"] as JsonArray<JsonObject>
@@ -162,27 +169,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         val torino = LatLng(45.069074, 7.686587)
-        val casaLuigina = LatLng(45.002732, 7.659876)
-        val lavoro = LatLng(45.112143, 7.6761608)
+        val casaLuigina = LatLng(45.0021566, 7.658212)
+        val lavoro = LatLng(45.1124765, 7.670353700000001)
         mMap.addMarker(MarkerOptions().position(casaLuigina).title("Casa"))
         mMap.addMarker(MarkerOptions().position(lavoro).title("T-Lab"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(torino))
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(casaLuigina, 5f))
-
-        getDirectionURL(casaLuigina, lavoro).httpGet()
-            .responseString { request, response, result ->
-                Log.d(TAG, "omarMap result: ${result}")
-                Log.d(TAG, "omarMap request: ${request}")
-                Log.d(TAG, "omarMap response: ${response}")
-//                when (result) {
-//                    is Result -> {
-//                        val ex = result.getException()
-//                    }
-//                    is Result.Success -> {
-//                        val data = result.get()
-//                    }
-//                }
-            }
 
     }
 
@@ -217,12 +209,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onRicordoUfficioInteraction(item: RicordoUfficio?) {
         playAudio(item?.audio)
-    }
-
-    fun getDirectionURL(origin: LatLng, dest: LatLng): String {
-        return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${dest.latitude},${dest.longitude}&sensor=false&mode=driving&key=${getString(
-            R.string.google_maps_key
-        )}"
     }
 
 //    private inner class GetDirection(val url : String) : AsyncTask<Void,Void,List<List<LatLng>>>(){
@@ -311,6 +297,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         val dialog: AlertDialog = builder.create()
 
+        dialog.show()
+    }
+
+    private fun showProgressDialog() {
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.progress_dialog, null)
+        builder.setView(dialogView)
+        builder.setCancelable(false)
+        dialog = builder.create()
         dialog.show()
     }
 

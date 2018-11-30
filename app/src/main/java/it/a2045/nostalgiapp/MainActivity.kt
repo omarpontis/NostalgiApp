@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
@@ -37,13 +38,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var mMap: GoogleMap
     private lateinit var mapFragment: SupportMapFragment
 
-    private val URL_json = "https://zeppelin.iptvng.eu.org/embedded/nsapp/config.json"
-    //    private val URL_json = "http://jsonplaceholder.typicode.com/users"
+    private val URLJson = "https://zeppelin.iptvng.eu.org/embedded/nsapp/config.json"
     private val mMediaPlayer = MediaPlayer()
 
-    var mListaColleghi: List<Collega>? = emptyList()
+    var mListaColleghi: List<Collega>? = null
         private set
-    var mListaRicordi: List<RicordoUfficio>? = emptyList()
+    var mListaRicordi: List<RicordoUfficio>? = null
         private set
     var mFotoParlante: FotoParlante? = null
         private set
@@ -64,32 +64,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         getRequest()
-//        parseJson()
-        selectItem(ExColleghiFragment.newInstance())
     }
 
     private fun getRequest() {
-        URL_json.httpGet()
-            .responseJson { request, response, result ->
-                Log.d(TAG, "omar result: ${result}")
-                Log.d(TAG, "omar request: ${request}")
-                Log.d(TAG, "omar response: ${response}")
-
-                parseJson(result.get().content)
-//                when (result) {
-//                    is Result -> {
-//                        val ex = result.getException()
-//                    }
-//                    is Result.Success -> {
-//                        val data = result.get()
-//                    }
-//                }
+        URLJson.httpGet()
+            .responseJson { _, _, result ->
+                val (json, error) = result
+                if (json != null) {
+                    parseJson(json.content)
+                    selectItem(ExColleghiFragment.newInstance())
+                } else {
+                    showAlert(error?.exception?.message)
+                }
             }
     }
 
     private fun parseJson(jsonString: String) {
-//        val data: JsonObject = Parser().parse(assets.open("config.json")) as JsonObject
-        val data: JsonObject = Parser().parse(jsonString.byteInputStream()) as JsonObject
+        val data: JsonObject = Parser().parse(assets.open("config.json")) as JsonObject
+//        val data: JsonObject = Parser().parse(jsonString.byteInputStream()) as JsonObject
 
         @Suppress("UNCHECKED_CAST")
         val sezioni = data["sezioni"] as JsonArray<JsonObject>
@@ -200,8 +192,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         try {
             mMediaPlayer.reset()
             mMediaPlayer.setDataSource(path)
-            mMediaPlayer.prepare()
-            mMediaPlayer.start()
+            mMediaPlayer.prepareAsync()
+            mMediaPlayer.setOnPreparedListener {
+                it.start()
+            }
         } catch (e: Exception) {
             Toast.makeText(this, "The file does not exist", Toast.LENGTH_LONG).show()
         }
@@ -308,5 +302,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return poly
     }
 
+    private fun showAlert(message: String?) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Errore")
+        builder.setMessage(message)
+
+        builder.setPositiveButton("OK") { _, _ ->
+        }
+        val dialog: AlertDialog = builder.create()
+
+        dialog.show()
+    }
 
 }

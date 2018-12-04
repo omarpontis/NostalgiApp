@@ -54,7 +54,7 @@ class ExColleghiAdapter(
         }
     }
 
-    override fun getItemCount(): Int = mValues!!.size
+    override fun getItemCount(): Int = mValues?.size ?: -1
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mIvFoto: ImageView = mView.iv_foto

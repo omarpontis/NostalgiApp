@@ -1,6 +1,7 @@
 package it.a2045.nostalgiapp
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -11,7 +12,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
-import android.widget.TextView
 import android.widget.Toast
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
@@ -25,6 +25,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
 import it.a2045.nostalgiapp.models.Collega
 import it.a2045.nostalgiapp.models.FotoParlante
 import it.a2045.nostalgiapp.models.RicordoUfficio
@@ -166,19 +167,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
 
-
-        val torino = LatLng(45.069074, 7.686587)
+        val centerCamera = LatLng(45.068873, 7.638482)
         val casaLuigina = LatLng(45.0021566, 7.658212)
         val lavoro = LatLng(45.1124765, 7.670353700000001)
         mMap.addMarker(MarkerOptions().position(casaLuigina).title("Casa"))
         mMap.addMarker(MarkerOptions().position(lavoro).title("T-Lab"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(torino))
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(casaLuigina, 5f))
+        drawPolylines()
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(centerCamera, 11f))
 
     }
 
-    fun playAudio(path: String?) {
+    private fun playAudio(path: String?) {
 
         stopAudio()
         try {
@@ -211,47 +212,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         playAudio(item?.audio)
     }
 
-//    private inner class GetDirection(val url : String) : AsyncTask<Void,Void,List<List<LatLng>>>(){
-//        override fun doInBackground(vararg params: Void?): List<List<LatLng>> {
-//            val client = OkHttpClient()
-//            val request = Request.Builder().url(url).build()
-//            val response = client.newCall(request).execute()
-//            val data = response.body()!!.string()
-//            Log.d("GoogleMap" , " data : $data")
-//            val result =  ArrayList<List<LatLng>>()
-//            try{
-//                val respObj = Gson().fromJson(data,GoogleMapDTO::class.java)
-//
-//                val path =  ArrayList<LatLng>()
-//
-//                for (i in 0..(respObj.routes[0].legs[0].steps.size-1)){
-////                    val startLatLng = LatLng(respObj.routes[0].legs[0].steps[i].start_location.lat.toDouble()
-////                            ,respObj.routes[0].legs[0].steps[i].start_location.lng.toDouble())
-////                    path.add(startLatLng)
-////                    val endLatLng = LatLng(respObj.routes[0].legs[0].steps[i].end_location.lat.toDouble()
-////                            ,respObj.routes[0].legs[0].steps[i].end_location.lng.toDouble())
-//                    path.addAll(decodePolyline(respObj.routes[0].legs[0].steps[i].polyline.points))
-//                }
-//                result.add(path)
-//            }catch (e:Exception){
-//                e.printStackTrace()
-//            }
-//            return result
-//        }
-//
-//        override fun onPostExecute(result: List<List<LatLng>>) {
-//            val lineoption = PolylineOptions()
-//            for (i in result.indices){
-//                lineoption.addAll(result[i])
-//                lineoption.width(10f)
-//                lineoption.color(Color.BLUE)
-//                lineoption.geodesic(true)
-//            }
-//            googleMap.addPolyline(lineoption)
-//        }
-//    }
+    private fun drawPolylines() {
 
-    public fun decodePolyline(encoded: String): List<LatLng> {
+        val respObj: JsonObject = Parser().parse(assets.open("route.json")) as JsonObject
+        @Suppress("UNCHECKED_CAST")
+        val steps = respObj["steps"] as JsonArray<JsonObject>
+
+        var polyline: JsonObject
+        val path = ArrayList<LatLng>()
+
+        steps.forEach {
+            polyline = it["polyline"] as JsonObject
+            path.addAll(decodePolyline(polyline["points"] as String))
+        }
+        val lineOption = PolylineOptions()
+        lineOption.addAll(path)
+        lineOption.width(15f)
+        lineOption.color(Color.BLUE)
+        lineOption.geodesic(true)
+        mMap.addPolyline(lineOption)
+    }
+
+    private fun decodePolyline(encoded: String): List<LatLng> {
 
         val poly = ArrayList<LatLng>()
         var index = 0

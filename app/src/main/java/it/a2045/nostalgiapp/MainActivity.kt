@@ -3,6 +3,7 @@ package it.a2045.nostalgiapp
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
@@ -12,6 +13,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.Toast
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
@@ -66,6 +68,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        nav_view.getHeaderView(0).findViewById<ImageView>(R.id.iv_luigina).setOnClickListener {
+            playAudio(
+                null,
+                Uri.parse("android.resource://" + this@MainActivity.packageName + "/raw/luigina_impossibile")
+            )
+        }
 
         getRequest()
     }
@@ -179,12 +188,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    private fun playAudio(path: String?) {
+    private fun playAudio(path: String?, uri: Uri?) {
 
         stopAudio()
         try {
             mMediaPlayer.reset()
-            mMediaPlayer.setDataSource(path)
+            if (path != null) {
+                mMediaPlayer.setDataSource(path)
+            } else if (uri != null) {
+                mMediaPlayer.setDataSource(this, uri)
+            }
             mMediaPlayer.prepareAsync()
             mMediaPlayer.setOnPreparedListener {
                 it.start()
@@ -201,15 +214,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onFabClick(audio: String?) {
-        playAudio(audio)
+        playAudio(audio, null)
     }
 
     override fun onListFragmentInteraction(item: Collega?) {
-        playAudio(item?.audio)
+        playAudio(item?.audio, null)
     }
 
     override fun onRicordoUfficioInteraction(item: RicordoUfficio?) {
-        playAudio(item?.audio)
+        playAudio(item?.audio, null)
     }
 
     private fun drawPolylines() {

@@ -25,8 +25,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Canada"
-                android:id="@+id/name_widget"
+                android:id="@+id/tv_testo"
                 android:layout_below="@+id/iv_ricordo"
                 android:layout_marginTop="10dp"
                 android:textColor="#000"/>

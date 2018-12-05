@@ -1,42 +1,53 @@
 {
-	"versione": 20181121,
-	"sezioni": [{
-		"nome": "ex_colleghi",
-		"contenuto": {
-			"list_array": [{
-				"nome": "Alberto",
-				"testo": "Luigina, ho vinto!",
-				"foto": "https://vignette.wikia.nocookie.net/nonciclopedia/images/8/84/Ballmer_developers.jpg/revision/latest?cb=20080509223627",
-				"audio": "https://www.albinoblacksheep.com/audio/mp3/Monkey_Developers.mp3"
-			}, {
-				"nome": "Davide",
-				"testo": "Luigina, mi hai lasciato solo su iOS",
-				"foto": "https://i.dailymail.co.uk/i/newpix/2018/04/01/06/4ABBB49500000578-0-image-m-31_1522559004378.jpg",
-				"audio": "http://urban180.com/wp-content/uploads/2017/09/olaide-Bambi_urban180.com_-1.mp3"
-			}]
-		}
-	}, {
-		"nome": "foto_parlante",
-		"contenuto": {
-			"foto": "https://cdn3.movieweb.com/i/article/jH86hWMBdB0FvnZuTE2sC0G2onvfp0/798:50/Avengers-4-Plot-Leak-How-Avengers-Beat-Thanos.jpg",
-			"audio": "http://programmerguru.com/android-tutorial/wp-content/uploads/2013/04/hosannatelugu.mp3"
-		}
-	}, {
-		"nome": "ricordi_ufficio",
-		"contenuto": {
-			"list_array": [{
-					"foto": "https://archivio.cronachedellacampania.it/wp-content/uploads/2016/11/the-jackal.jpg",
-					"audio": "http://urban180.com/wp-content/uploads/2017/09/olaide-Bambi_urban180.com_-1.mp3"
-				},
-
-				{
-					"foto": "https://i.ytimg.com/vi/X-CFzMMg6H0/hqdefault.jpg",
-					"audio": "http://urban180.com/wp-content/uploads/2017/09/olaide-Bambi_urban180.com_-1.mp3"
-				},{
-					"foto": "https://cdn.gelestatic.it/deejay/www/2018/03/Nero-Whatsapp-Maxino-COP.jpg",
-					"audio": "https://www.albinoblacksheep.com/audio/mp3/Monkey_Developers.mp3"
-				}
-			]
-		}
-	}]
+  "versione": 20181121,
+  "sezioni": [
+    {
+      "nome": "ex_colleghi",
+      "contenuto": {
+        "list_array": [
+          {
+            "nome": "Alberto",
+            "testo": "Luigina, ho vinto!",
+            "foto": "https://vignette.wikia.nocookie.net/nonciclopedia/images/8/84/Ballmer_developers.jpg/revision/latest?cb=20080509223627",
+            "audio": "https://www.albinoblacksheep.com/audio/mp3/Monkey_Developers.mp3"
+          },
+          {
+            "nome": "Davide",
+            "testo": "Luigina, mi hai lasciato solo su iOS",
+            "foto": "https://i.dailymail.co.uk/i/newpix/2018/04/01/06/4ABBB49500000578-0-image-m-31_1522559004378.jpg",
+            "audio": "http://urban180.com/wp-content/uploads/2017/09/olaide-Bambi_urban180.com_-1.mp3"
+          }
+        ]
+      }
+    },
+    {
+      "nome": "foto_parlante",
+      "contenuto": {
+        "foto": "https://cdn3.movieweb.com/i/article/jH86hWMBdB0FvnZuTE2sC0G2onvfp0/798:50/Avengers-4-Plot-Leak-How-Avengers-Beat-Thanos.jpg",
+        "audio": "http://programmerguru.com/android-tutorial/wp-content/uploads/2013/04/hosannatelugu.mp3"
+      }
+    },
+    {
+      "nome": "ricordi_ufficio",
+      "contenuto": {
+        "list_array": [
+          {
+            "foto": "https://archivio.cronachedellacampania.it/wp-content/uploads/2016/11/the-jackal.jpg",
+            "audio": "http://urban180.com/wp-content/uploads/2017/09/olaide-Bambi_urban180.com_-1.mp3",
+            "testo": "adfsfh"
+          },
+          {
+            "foto": "https://i.ytimg.com/vi/X-CFzMMg6H0/hqdefault.jpg",
+            "audio": "http://urban180.com/wp-content/uploads/2017/09/olaide-Bambi_urban180.com_-1.mp3",
+            "testo": "adfsfh"
+          },
+          {
+            "foto": "https://cdn.gelestatic.it/deejay/www/2018/03/Nero-Whatsapp-Maxino-COP.jpg",
+            "audio": "https://www.albinoblacksheep.com/audio/mp3/Monkey_Developers.mp3",
+            "testo": "adfsfh"
+          }
+        ]
+      }
+    }
+  ]
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import it.a2045.nostalgiapp.RicordiUfficioFragment.OnRicordiUfficioFragmentInteractionListener
@@ -43,6 +44,8 @@ class RicordiUfficioAdapter(
             .apply(requestOptions)
             .into(holder.mIvFoto)
 
+        holder.mTvTesto.text = item.testo
+
         with(holder.mView) {
             tag = item
             setOnClickListener(mOnClickListener)
@@ -53,6 +56,6 @@ class RicordiUfficioAdapter(
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mIvFoto: ImageView = mView.iv_ricordo
-
+        val mTvTesto: TextView = mView.tv_testo
     }
 }

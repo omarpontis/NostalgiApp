@@ -3,11 +3,9 @@ package it.a2045.nostalgiapp
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
-import android.support.v7.widget.StaggeredGridLayoutManager.VERTICAL
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,8 +23,7 @@ class RicordiUfficioFragment : Fragment() {
 
         if (view is RecyclerView) {
             with(view) {
-                layoutManager = GridLayoutManager(context,2)
-                setHasFixedSize(true)
+                layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
                 adapter = RicordiUfficioAdapter(listener)
             }
         }

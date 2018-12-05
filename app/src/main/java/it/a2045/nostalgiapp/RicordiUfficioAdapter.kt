@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import it.a2045.nostalgiapp.RicordiUfficioFragment.OnRicordiUfficioFragmentInteractionListener
 import it.a2045.nostalgiapp.models.RicordoUfficio
 import kotlinx.android.synthetic.main.fragment_ricordi_ufficio_item.view.*
@@ -34,8 +35,12 @@ class RicordiUfficioAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues!![position]
 
+        val requestOptions = RequestOptions()
+            .placeholder(R.drawable.ic_launcher_foreground)
+
         Glide.with(mListener as Context)
             .load(item.foto)
+            .apply(requestOptions)
             .into(holder.mIvFoto)
 
         with(holder.mView) {
@@ -44,7 +49,7 @@ class RicordiUfficioAdapter(
         }
     }
 
-    override fun getItemCount(): Int = mValues!!.size
+    override fun getItemCount(): Int = mValues?.size ?: 0
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mIvFoto: ImageView = mView.iv_ricordo

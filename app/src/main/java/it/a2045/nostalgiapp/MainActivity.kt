@@ -11,6 +11,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
@@ -33,6 +34,8 @@ import it.a2045.nostalgiapp.models.FotoParlante
 import it.a2045.nostalgiapp.models.RicordoUfficio
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+
+fun Fragment.toastLong(testo:String) {Toast.makeText(activity, testo, Toast.LENGTH_LONG).show()}
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     ExColleghiFragment.OnListFragmentInteractionListener, OnMapReadyCallback,
@@ -207,6 +210,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+
+    private fun startVideoPlayer(video: String?) {
+        selectItem(VideoPlayerFragment.newInstance(video))
+    }
+
     override fun stopAudio() {
         if (mMediaPlayer.isPlaying) {
             mMediaPlayer.stop()
@@ -222,7 +230,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onRicordoUfficioInteraction(item: RicordoUfficio?) {
-        playAudio(item?.audio, null)
+        if (!TextUtils.isEmpty(item?.video))
+            startVideoPlayer(item?.video)
+        else
+            playAudio(item?.audio, null)
     }
 
     private fun drawPolylines() {

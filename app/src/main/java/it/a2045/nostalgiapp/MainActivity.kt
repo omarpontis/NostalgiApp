@@ -1,6 +1,8 @@
 package it.a2045.nostalgiapp
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
@@ -35,7 +37,7 @@ import it.a2045.nostalgiapp.models.RicordoUfficio
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-fun Fragment.toastLong(testo:String) {Toast.makeText(activity, testo, Toast.LENGTH_LONG).show()}
+fun Context.toastLong(testo:String) {Toast.makeText(this, testo, Toast.LENGTH_LONG).show()}
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     ExColleghiFragment.OnListFragmentInteractionListener, OnMapReadyCallback,
@@ -210,9 +212,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-
     private fun startVideoPlayer(video: String?) {
-        selectItem(VideoPlayerFragment.newInstance(video))
+        val videoPlayerIntent = Intent(this, VideoPlayerActivity::class.java)
+        videoPlayerIntent.putExtra(VideoPlayerActivity.VIDEO_URL_EXTRA, video)
+        startActivity(videoPlayerIntent)
     }
 
     override fun stopAudio() {

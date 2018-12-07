@@ -46,6 +46,12 @@ class RicordiUfficioAdapter(
 
         holder.mTvTesto.text = item.testo
 
+        if(item.video.isEmpty()){
+            holder.mIvIcona.setImageDrawable((mListener as Context).resources.getDrawable(R.drawable.ic_audio, null))
+        } else {
+            holder.mIvIcona.setImageDrawable((mListener as Context).resources.getDrawable(R.drawable.ic_video, null))
+        }
+
         with(holder.mView) {
             tag = item
             setOnClickListener(mOnClickListener)
@@ -57,5 +63,6 @@ class RicordiUfficioAdapter(
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mIvFoto: ImageView = mView.iv_ricordo
         val mTvTesto: TextView = mView.tv_testo
+        val mIvIcona: ImageView = mView.iv_icona
     }
 }

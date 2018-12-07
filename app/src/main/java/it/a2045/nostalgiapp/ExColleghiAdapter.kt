@@ -26,17 +26,6 @@ class ExColleghiAdapter(
     }
 
     private var mValues: List<Collega>? = (mListener as MainActivity).mListaColleghi
-    private val mOnClickListener: View.OnClickListener
-
-    init {
-        mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as Collega
-            // Notify the active callbacks interface (the activity, if the fragment is attached to
-            // one) that an item has been selected.
-            mListener?.onListFragmentInteraction(item)
-        }
-
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -48,8 +37,9 @@ class ExColleghiAdapter(
         val item = mValues!![position]
         holder.mTvName.text = item.nome
         holder.mTvMessage.text = item.testo
-        holder.mIvIcona.setOnClickListener { mOnClickListener }
-
+        holder.mIvIcona.setOnClickListener { v ->
+            mListener?.onListFragmentInteraction(v.tag as Collega)
+        }
         holder.mIvFoto.setOnClickListener { v ->
             mPhotoListener?.zoomImageFromThumb(v, item.foto)
         }
@@ -59,7 +49,7 @@ class ExColleghiAdapter(
             .apply(RequestOptions.circleCropTransform())
             .into(holder.mIvFoto)
 
-        with(holder.mView) {
+        with(holder.mIvIcona) {
             tag = item
         }
     }

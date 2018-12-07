@@ -36,11 +36,13 @@ class ExColleghiFragment : Fragment(), ExColleghiAdapter.OnPhotoClickListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_ex_colleghi, container, false)
 
-        if (view is RecyclerView) {
-            with(view) {
-                adapter = ExColleghiAdapter(listener, this@ExColleghiFragment)
-            }
-        }
+        view.findViewById<RecyclerView>(R.id.rv_ex_colleghi).adapter = ExColleghiAdapter(listener, this@ExColleghiFragment)
+
+//        if (view is RecyclerView) {
+//            with(view) {
+//                adapter = ExColleghiAdapter(listener, this@ExColleghiFragment)
+//            }
+//        }
         return view
     }
 
@@ -63,7 +65,6 @@ class ExColleghiFragment : Fragment(), ExColleghiAdapter.OnPhotoClickListener {
         fun onListFragmentInteraction(item: Collega?)
         fun stopAudio()
     }
-
 
 
     companion object {

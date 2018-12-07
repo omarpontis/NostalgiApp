@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:id="@+id/container"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/list"
+
+            android:id="@+id/rv_ex_colleghi"
             android:background="@color/fragment_background_color"
             android:name="it.a2045.nostalgiapp.ExColleghiFragment"
             android:layout_width="match_parent"
+            app:layoutManager="LinearLayoutManager"
             android:layout_height="match_parent"
             tools:context=".ExColleghiFragment"
             tools:listitem="@layout/fragment_ex_colleghi_item"/>
@@ -18,5 +21,5 @@
             android:id="@+id/iv_expanded_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:visibility="invisible"/>
 </FrameLayout>

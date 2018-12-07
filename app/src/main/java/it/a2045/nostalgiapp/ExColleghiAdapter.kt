@@ -15,6 +15,8 @@ import it.a2045.nostalgiapp.ExColleghiFragment.OnListFragmentInteractionListener
 import it.a2045.nostalgiapp.models.Collega
 
 import kotlinx.android.synthetic.main.fragment_ex_colleghi_item.view.*
+import android.graphics.Typeface
+
 
 class ExColleghiAdapter(
     private val mListener: OnListFragmentInteractionListener?,
@@ -37,6 +39,12 @@ class ExColleghiAdapter(
         val item = mValues!![position]
         holder.mTvName.text = item.nome
         holder.mTvMessage.text = item.testo
+
+        if("Iole".equals(item.nome)){
+            val typeface = Typeface.createFromAsset ((mListener as Context).assets, "font/gilbert_color_bold.otf")
+            holder.mTvMessage.typeface = typeface
+        }
+
         holder.mIvIcona.setOnClickListener { v ->
             mListener?.onListFragmentInteraction(v.tag as Collega)
         }

@@ -150,7 +150,7 @@ class ExColleghiFragment : Fragment(), ExColleghiAdapter.OnPhotoClickListener {
         Blurry.with(context)
             .radius(10)
             .sampling(8)
-            .color(Color.argb(66, 255, 255, 0))
+            .color(Color.argb(66, 255, 255, 255))
             .async()
             .animate(100)
             .onto(mFLBlur as ViewGroup?)

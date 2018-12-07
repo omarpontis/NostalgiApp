@@ -22,6 +22,7 @@
             android:id="@+id/iv_luigina"/>
 
     <TextView
+            android:textColor="@color/nav_menu_header_tv_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
@@ -29,6 +30,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
+            android:textColor="@color/nav_menu_header_tv_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/la_mia_nostalgiapp"

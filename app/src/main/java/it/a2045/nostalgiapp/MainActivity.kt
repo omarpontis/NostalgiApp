@@ -35,7 +35,9 @@ import it.a2045.nostalgiapp.models.RicordoUfficio
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-fun Fragment.toastLong(testo:String) {Toast.makeText(activity, testo, Toast.LENGTH_LONG).show()}
+fun Fragment.toastLong(testo: String) {
+    Toast.makeText(activity, testo, Toast.LENGTH_LONG).show()
+}
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     ExColleghiFragment.OnListFragmentInteractionListener, OnMapReadyCallback,
@@ -91,7 +93,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     dialog.dismiss()
                     if (json != null) {
                         parseJson(json.content)
-                        selectItem(ExColleghiFragment.newInstance())
+                        onNavigationItemSelected(nav_view.menu.getItem(0))
+//                        selectItem(ExColleghiFragment.newInstance())
                     } else {
                         showAlert(error?.exception?.message)
                     }
@@ -164,6 +167,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 selectItem(mapFragment)
             }
         }
+        title = item.title
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }

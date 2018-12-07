@@ -5,6 +5,7 @@
         android:id="@+id/rv_ricordi"
         android:name="it.a2045.nostalgiapp.RicordiUfficioFragment"
         android:layout_width="match_parent"
+        android:background="@color/fragment_background_color"
         android:layout_height="match_parent"
         tools:context=".RicordiUfficioFragment"
         tools:listitem="@layout/fragment_ricordi_ufficio_item"/>

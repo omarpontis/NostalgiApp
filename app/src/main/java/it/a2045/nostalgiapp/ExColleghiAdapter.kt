@@ -17,8 +17,13 @@ import it.a2045.nostalgiapp.models.Collega
 import kotlinx.android.synthetic.main.fragment_ex_colleghi_item.view.*
 
 class ExColleghiAdapter(
-    private val mListener: OnListFragmentInteractionListener?
+    private val mListener: OnListFragmentInteractionListener?,
+    private val mPhotoListener: OnPhotoClickListener?
 ) : RecyclerView.Adapter<ExColleghiAdapter.ViewHolder>() {
+
+    interface OnPhotoClickListener {
+        fun zoomImageFromThumb(thumbView: View, urlImage: String)
+    }
 
     private var mValues: List<Collega>? = (mListener as MainActivity).mListaColleghi
     private val mOnClickListener: View.OnClickListener
@@ -30,6 +35,7 @@ class ExColleghiAdapter(
             // one) that an item has been selected.
             mListener?.onListFragmentInteraction(item)
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,6 +48,11 @@ class ExColleghiAdapter(
         val item = mValues!![position]
         holder.mTvName.text = item.nome
         holder.mTvMessage.text = item.testo
+        holder.mIvIcona.setOnClickListener { mOnClickListener }
+
+        holder.mIvFoto.setOnClickListener { v ->
+            mPhotoListener?.zoomImageFromThumb(v, item.foto)
+        }
 
         Glide.with(mListener as Context)
             .load(item.foto)
@@ -50,7 +61,6 @@ class ExColleghiAdapter(
 
         with(holder.mView) {
             tag = item
-            setOnClickListener(mOnClickListener)
         }
     }
 
@@ -60,6 +70,7 @@ class ExColleghiAdapter(
         val mIvFoto: ImageView = mView.iv_foto
         val mTvName: TextView = mView.tv_name
         val mTvMessage: TextView = mView.tv_message
+        val mIvIcona: ImageView = mView.iv_icona
 
         override fun toString(): String {
             return super.toString() + " '" + mTvName.text + "' " + mTvMessage.text + "'"

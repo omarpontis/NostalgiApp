@@ -8,6 +8,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -24,37 +25,34 @@ import com.beust.klaxon.Klaxon
 import com.beust.klaxon.Parser
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.httpGet
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
 import it.a2045.nostalgiapp.models.Collega
 import it.a2045.nostalgiapp.models.FotoParlante
 import it.a2045.nostalgiapp.models.RicordoUfficio
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 fun Context.toastLong(testo:String) {Toast.makeText(this, testo, Toast.LENGTH_LONG).show()}
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-    ExColleghiFragment.OnListFragmentInteractionListener, OnMapReadyCallback,
+    ExColleghiFragment.OnListFragmentInteractionListener,
     FotoParlanteFragment.OnFotoParlanteInteractionListener,
-    RicordiUfficioFragment.OnRicordiUfficioFragmentInteractionListener {
-
-    private lateinit var mMap: GoogleMap
-    private lateinit var mapFragment: SupportMapFragment
+    RicordiUfficioFragment.OnRicordiUfficioFragmentInteractionListener,
+    InfoTrafficoFragment.OnInfoTrafficoInteractionListener {
 
     private val URLJson = "https://zeppelin.iptvng.eu.org/embedded/nsapp/config.json"
     private val mMediaPlayer = MediaPlayer()
+    lateinit var mSnackbar: Snackbar
+    var mInfoTrafficoIndex = -1
 
     var mListaColleghi: List<Collega>? = null
         private set
     var mListaRicordi: List<RicordoUfficio>? = null
         private set
     var mFotoParlante: FotoParlante? = null
+        private set
+    var mListaInfoTraffico: List<String>? = null
         private set
 
     lateinit var dialog: AlertDialog
@@ -134,6 +132,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     mListaRicordi = klaxon.parseFromJsonArray(listarray)
                     Log.d(TAG, "listaRicordi   $mListaRicordi")
                 }
+                "info_traffico" -> {
+                    mListaInfoTraffico = klaxon.parseFromJsonArray(listarray)
+                    Log.d(TAG, "infoTraffico   $mListaInfoTraffico")
+                }
             }
         }
     }
@@ -161,10 +163,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 selectItem(RicordiUfficioFragment.newInstance())
             }
             R.id.nav_oggi_esco_presto -> {
-                mapFragment = SupportMapFragment.newInstance()
-                mapFragment.getMapAsync(this)
-
-                selectItem(mapFragment)
+                selectItem(InfoTrafficoFragment.newInstance())
             }
         }
         title = item.title
@@ -179,20 +178,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //            addToBackStack(null)
             commit()
         }
-    }
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
-
-        val centerCamera = LatLng(45.068873, 7.638482)
-        val casaLuigina = LatLng(45.0021566, 7.658212)
-        val lavoro = LatLng(45.1124765, 7.670353700000001)
-        mMap.addMarker(MarkerOptions().position(casaLuigina).title("Casa"))
-        mMap.addMarker(MarkerOptions().position(lavoro).title("T-Lab"))
-        drawPolylines()
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(centerCamera, 11f))
-
     }
 
     private fun playAudio(path: String?, uri: Uri?) {
@@ -241,62 +226,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             playAudio(item?.audio, null)
     }
 
-    private fun drawPolylines() {
-
-        val respObj: JsonObject = Parser().parse(assets.open("route.json")) as JsonObject
-        @Suppress("UNCHECKED_CAST")
-        val steps = respObj["steps"] as JsonArray<JsonObject>
-
-        var polyline: JsonObject
-        val path = ArrayList<LatLng>()
-
-        steps.forEach {
-            polyline = it["polyline"] as JsonObject
-            path.addAll(decodePolyline(polyline["points"] as String))
+    override fun onShowInfoTraffico() {
+        if (mListaInfoTraffico != null) {
+            val listSize = mListaInfoTraffico!!.size
+            if (mInfoTrafficoIndex == -1) {
+                mInfoTrafficoIndex = Random.nextInt(0, listSize.minus(1))
+            }
+            mSnackbar = Snackbar.make(findViewById(android.R.id.content), mListaInfoTraffico!!.get(mInfoTrafficoIndex), Snackbar.LENGTH_INDEFINITE)
+            mSnackbar.show()
+            mInfoTrafficoIndex = mInfoTrafficoIndex.plus(1).rem(listSize)
         }
-        val lineOption = PolylineOptions()
-        lineOption.addAll(path)
-        lineOption.width(15f)
-        lineOption.color(Color.BLUE)
-        lineOption.geodesic(true)
-        mMap.addPolyline(lineOption)
     }
 
-    private fun decodePolyline(encoded: String): List<LatLng> {
-
-        val poly = ArrayList<LatLng>()
-        var index = 0
-        val len = encoded.length
-        var lat = 0
-        var lng = 0
-
-        while (index < len) {
-            var b: Int
-            var shift = 0
-            var result = 0
-            do {
-                b = encoded[index++].toInt() - 63
-                result = result or (b and 0x1f shl shift)
-                shift += 5
-            } while (b >= 0x20)
-            val dlat = if (result and 1 != 0) (result shr 1).inv() else result shr 1
-            lat += dlat
-
-            shift = 0
-            result = 0
-            do {
-                b = encoded[index++].toInt() - 63
-                result = result or (b and 0x1f shl shift)
-                shift += 5
-            } while (b >= 0x20)
-            val dlng = if (result and 1 != 0) (result shr 1).inv() else result shr 1
-            lng += dlng
-
-            val latLng = LatLng((lat.toDouble() / 1E5), (lng.toDouble() / 1E5))
-            poly.add(latLng)
-        }
-
-        return poly
+    override fun onDismissInfoTraffico() {
+        mSnackbar?.dismiss()
     }
 
     private fun showAlert(message: String?) {

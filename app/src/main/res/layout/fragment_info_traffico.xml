@@ -11,24 +11,4 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent" />
 
-    <LinearLayout
-        android:id="@+id/ll_info_traffico"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/fragment_background_color_transparent"
-        android:layout_alignParentBottom="true"
-        >
-
-        <TextView
-            android:id="@+id/tv_info_traffico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:layout_margin="@dimen/text_margin"
-            android:text="@string/hello_blank_fragment"
-            android:visibility="gone"/>
-
-    </LinearLayout>
-
 </RelativeLayout>

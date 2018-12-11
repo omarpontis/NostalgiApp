@@ -21,12 +21,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import kotlin.concurrent.thread
 
-/**
- * A simple [Fragment] subclass.
- * Use the [InfoTrafficoFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
 class InfoTrafficoFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapFragment: SupportMapFragment
     private lateinit var mMap: GoogleMap
@@ -37,7 +31,6 @@ class InfoTrafficoFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_info_traffico, container, false)
         mapFragment = childFragmentManager.findFragmentById(R.id.fr_map) as SupportMapFragment
         mapFragment.getMapAsync(this)

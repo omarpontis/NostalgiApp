@@ -40,11 +40,6 @@ class ExColleghiAdapter(
         holder.mTvName.text = item.nome
         holder.mTvMessage.text = item.testo
 
-        if("Iole".equals(item.nome)){
-            val typeface = Typeface.createFromAsset ((mListener as Context).assets, "font/gilbert_color_bold.otf")
-            holder.mTvMessage.typeface = typeface
-        }
-
         holder.mIvIcona.setOnClickListener { v ->
             mListener?.onListFragmentInteraction(v.tag as Collega)
         }

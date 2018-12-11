@@ -59,10 +59,17 @@ class InfoTrafficoFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    override fun onDetach() {
-        showNextInfo = false;
+//    override fun onDetach() {
+//        showNextInfo = false
+//        listener?.onDismissInfoTraffico()
+//        super.onDetach()
+//    }
+//
+
+    override fun onPause() {
+        showNextInfo = false
         listener?.onDismissInfoTraffico()
-        super.onDetach()
+        super.onPause()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

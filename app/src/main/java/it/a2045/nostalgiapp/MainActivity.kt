@@ -88,6 +88,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         getRequest()
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount  == 0) {
+                finish()
+            }
+        }
     }
 
     private fun getRequest() {
@@ -150,7 +156,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
-//        } else if (supportFragmentManager.backStackEntryCount ) {
         } else {
             super.onBackPressed()
         }

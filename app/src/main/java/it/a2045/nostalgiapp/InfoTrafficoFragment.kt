@@ -4,7 +4,6 @@ package it.a2045.nostalgiapp
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +15,15 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import kotlin.concurrent.thread
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+
+
 
 /**
  * A simple [Fragment] subclass.
@@ -70,13 +74,24 @@ class InfoTrafficoFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+        mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
 
         val centerCamera = LatLng(45.068873, 7.638482)
         val casaLuigina = LatLng(45.0021566, 7.658212)
         val lavoro = LatLng(45.1124765, 7.670353700000001)
-        mMap.addMarker(MarkerOptions().position(casaLuigina).title("Casa"))
-        mMap.addMarker(MarkerOptions().position(lavoro).title("TILab"))
+
+        val height = 300
+        val width = 300
+        val bdCasaLuigina = resources.getDrawable(R.drawable.casaluigina) as BitmapDrawable
+        val bCasaLuigina = bdCasaLuigina.bitmap
+        val casaLuiginaMarker = Bitmap.createScaledBitmap(bCasaLuigina, width, height, false)
+
+        val bdTilab = resources.getDrawable(R.drawable.tilabmarker) as BitmapDrawable
+        val bTilab = bdTilab.bitmap
+        val tilabMarker = Bitmap.createScaledBitmap(bTilab, width, height, false)
+
+        mMap.addMarker(MarkerOptions().position(casaLuigina).title("Casa").icon(BitmapDescriptorFactory.fromBitmap(casaLuiginaMarker)))
+        mMap.addMarker(MarkerOptions().position(lavoro).title("TILab").icon(BitmapDescriptorFactory.fromBitmap(tilabMarker)))
         drawPolylines()
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(centerCamera, 11f))
     }
@@ -97,7 +112,7 @@ class InfoTrafficoFragment : Fragment(), OnMapReadyCallback {
         val lineOption = PolylineOptions()
         lineOption.addAll(path)
         lineOption.width(15f)
-        lineOption.color(Color.GREEN)
+        lineOption.color(R.color.colorPrimary)
         lineOption.geodesic(true)
         mMap.addPolyline(lineOption)
     }

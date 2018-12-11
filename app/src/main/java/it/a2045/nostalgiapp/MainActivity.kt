@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     RicordiUfficioFragment.OnRicordiUfficioFragmentInteractionListener,
     InfoTrafficoFragment.OnInfoTrafficoInteractionListener {
 
-    private val URLJson = "https://zeppelin.iptvng.eu.org/embedded/nsapp/config.json"
+    private lateinit var URLJson: String
     private val mMediaPlayer = MediaPlayer()
     lateinit var mSnackbar: Snackbar
     var mInfoTrafficoIndex = -1
@@ -61,6 +61,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val SERVER_ADDRESS = getString(R.string.server_address)
+        URLJson = SERVER_ADDRESS + "/nsapp/config.json"
+
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
@@ -239,7 +242,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onDismissInfoTraffico() {
-        mSnackbar?.dismiss()
+        mSnackbar.dismiss()
     }
 
     private fun showAlert(message: String?) {

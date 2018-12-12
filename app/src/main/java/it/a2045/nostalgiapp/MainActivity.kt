@@ -59,6 +59,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private val TAG = MainActivity::class.qualifiedName
 
+    private val mExColleghiFragment : ExColleghiFragment = ExColleghiFragment.newInstance()
+    private val mFotoParlanteFragment : FotoParlanteFragment = FotoParlanteFragment.newInstance()
+    private val mRicordiUfficioFragment : RicordiUfficioFragment = RicordiUfficioFragment.newInstance()
+    private val mInfoTrafficoFragment : InfoTrafficoFragment = InfoTrafficoFragment.newInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val SERVER_ADDRESS = getString(R.string.server_address)
@@ -83,6 +88,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         getRequest()
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount  == 0) {
+                finish()
+            }
+        }
     }
 
     private fun getRequest() {
@@ -95,7 +106,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     if (json != null) {
                         parseJson(json.content)
                         onNavigationItemSelected(nav_view.menu.getItem(0))
-//                        selectItem(ExColleghiFragment.newInstance())
                     } else {
                         showAlert(error?.exception?.message)
                     }
@@ -146,7 +156,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
-//        } else if (supportFragmentManager.backStackEntryCount ) {
         } else {
             super.onBackPressed()
         }
@@ -157,16 +166,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
 
             R.id.nav_miei_ex_colleghi -> {
-                selectItem(ExColleghiFragment.newInstance())
+                selectItem(mExColleghiFragment)
             }
             R.id.nav_foto_parlante -> {
-                selectItem(FotoParlanteFragment.newInstance())
+                selectItem(mFotoParlanteFragment)
             }
             R.id.nav_ricordi_ufficio -> {
-                selectItem(RicordiUfficioFragment.newInstance())
+                selectItem(mRicordiUfficioFragment)
             }
             R.id.nav_oggi_esco_presto -> {
-                selectItem(InfoTrafficoFragment.newInstance())
+                selectItem(mInfoTrafficoFragment)
             }
         }
         title = item.title
@@ -178,7 +187,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun selectItem(fragment: Fragment) {
         supportFragmentManager.beginTransaction().run {
             replace(R.id.content_frame, fragment)
-//            addToBackStack(null)
+            addToBackStack(null)
             commit()
         }
     }

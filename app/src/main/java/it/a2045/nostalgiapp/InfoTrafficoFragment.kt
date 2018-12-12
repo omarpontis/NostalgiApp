@@ -80,8 +80,8 @@ class InfoTrafficoFragment : Fragment(), OnMapReadyCallback {
         val casaLuigina = LatLng(45.0021566, 7.658212)
         val lavoro = LatLng(45.1124765, 7.670353700000001)
 
-        val height = 300
-        val width = 300
+        val height = 400
+        val width = 400
         val bdCasaLuigina = resources.getDrawable(R.drawable.casaluigina) as BitmapDrawable
         val bCasaLuigina = bdCasaLuigina.bitmap
         val casaLuiginaMarker = Bitmap.createScaledBitmap(bCasaLuigina, width, height, false)

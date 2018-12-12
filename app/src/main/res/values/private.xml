@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="server_address">PutYourServerUrlHere</string>
+    <string name="server_address">https://zeppelin.iptvng.eu.org/embedded</string>
 </resources>

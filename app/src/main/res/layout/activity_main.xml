@@ -5,6 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
+        android:backgroundTint="@color/fragment_background_color"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:keepScreenOn="true"
@@ -12,6 +13,7 @@
 
     <include
             layout="@layout/app_bar_main"
+            android:backgroundTint="@color/fragment_background_color"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

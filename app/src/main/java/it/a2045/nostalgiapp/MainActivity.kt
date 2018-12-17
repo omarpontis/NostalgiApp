@@ -1,10 +1,8 @@
 package it.a2045.nostalgiapp
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
@@ -31,6 +29,7 @@ import it.a2045.nostalgiapp.models.FotoParlante
 import it.a2045.nostalgiapp.models.RicordoUfficio
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import java.lang.Thread.sleep
 import kotlin.random.Random
 
 fun Context.toastLong(testo:String) {Toast.makeText(this, testo, Toast.LENGTH_LONG).show()}
@@ -97,6 +96,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun getRequest() {
         showProgressDialog()
         Thread {
+            sleep(1000)
             URLJson.httpGet()
                 .responseJson { _, _, result ->
                     val (json, error) = result

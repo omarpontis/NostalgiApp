@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout android:id="@+id/ll_blur" android:layout_width="match_parent" android:layout_height="wrap_content"
+    <FrameLayout android:id="@+id/fl_blur" android:layout_width="match_parent" android:layout_height="match_parent"
     >
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_ex_colleghi"
@@ -20,7 +20,7 @@
                 android:paddingBottom="60dp"
                 tools:context=".ExColleghiFragment"
                 tools:listitem="@layout/fragment_ex_colleghi_item"/>
-    </LinearLayout>
+    </FrameLayout>
 
     <ImageView
             android:id="@+id/iv_expanded_image"

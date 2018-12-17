@@ -56,6 +56,11 @@ class RicordiUfficioFragment : Fragment() {
             RicordiUfficioFragment().apply {}
     }
 
+    override fun onResume() {
+        super.onResume()
+        (listener as MainActivity).title = resources.getString(R.string.ricordi_ufficio)
+    }
+
     override fun onPause() {
         listener?.stopAudio()
         super.onPause()

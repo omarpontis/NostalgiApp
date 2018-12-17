@@ -1,6 +1,7 @@
 package it.a2045.nostalgiapp
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -31,13 +32,11 @@ import it.a2045.nostalgiapp.models.RicordoUfficio
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlin.random.Random
-import kotlin.random.nextInt
 
 fun Context.toastLong(testo:String) {Toast.makeText(this, testo, Toast.LENGTH_LONG).show()}
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     ExColleghiFragment.OnListFragmentInteractionListener,
-    FotoParlanteFragment.OnFotoParlanteInteractionListener,
     RicordiUfficioFragment.OnRicordiUfficioFragmentInteractionListener,
     InfoTrafficoFragment.OnInfoTrafficoInteractionListener {
 
@@ -60,7 +59,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val TAG = MainActivity::class.qualifiedName
 
     private val mExColleghiFragment : ExColleghiFragment = ExColleghiFragment.newInstance()
-    private val mFotoParlanteFragment : FotoParlanteFragment = FotoParlanteFragment.newInstance()
     private val mRicordiUfficioFragment : RicordiUfficioFragment = RicordiUfficioFragment.newInstance()
     private val mInfoTrafficoFragment : InfoTrafficoFragment = InfoTrafficoFragment.newInstance()
 
@@ -169,7 +167,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 selectItem(mExColleghiFragment)
             }
             R.id.nav_foto_parlante -> {
-                selectItem(mFotoParlanteFragment)
+                startFullScreenImage()
             }
             R.id.nav_ricordi_ufficio -> {
                 selectItem(mRicordiUfficioFragment)
@@ -180,7 +178,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         title = item.title
         drawer_layout.closeDrawer(GravityCompat.START)
-        return true
+        return false
     }
 
     @SuppressLint("CommitTransaction") // commit() is called
@@ -217,14 +215,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         startActivity(videoPlayerIntent)
     }
 
+    private fun startFullScreenImage() {
+        val intent = Intent(this, FullScreenImageActivity::class.java)
+        intent.putExtra(FullScreenImageActivity.IMAGE_URL_EXTRA, mFotoParlante?.foto)
+        intent.putExtra(FullScreenImageActivity.AUDIO_URL_EXTRA, mFotoParlante?.audio)
+        startActivity(intent)
+    }
+
     override fun stopAudio() {
         if (mMediaPlayer.isPlaying) {
             mMediaPlayer.stop()
         }
-    }
-
-    override fun onFabClick(audio: String?) {
-        playAudio(audio, null)
     }
 
     override fun onListFragmentInteraction(item: Collega?) {

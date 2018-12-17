@@ -59,12 +59,10 @@ class InfoTrafficoFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-//    override fun onDetach() {
-//        showNextInfo = false
-//        listener?.onDismissInfoTraffico()
-//        super.onDetach()
-//    }
-//
+    override fun onResume() {
+        super.onResume()
+        (listener as MainActivity).title = resources.getString(R.string.info_traffico)
+    }
 
     override fun onPause() {
         showNextInfo = false

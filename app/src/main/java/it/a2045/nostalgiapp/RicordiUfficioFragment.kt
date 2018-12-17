@@ -9,6 +9,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import it.a2045.nostalgiapp.models.RicordoUfficio
 
 class RicordiUfficioFragment : Fragment() {
@@ -25,6 +26,9 @@ class RicordiUfficioFragment : Fragment() {
             with(view) {
                 layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
                 adapter = RicordiUfficioAdapter(listener)
+                val resId = R.anim.layout_animation_fall_down
+                val animation = AnimationUtils.loadLayoutAnimation(listener as MainActivity, resId)
+                layoutAnimation = animation
             }
         }
         return view

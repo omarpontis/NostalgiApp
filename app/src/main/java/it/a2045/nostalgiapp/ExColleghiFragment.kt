@@ -15,14 +15,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import it.a2045.nostalgiapp.models.Collega
 import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.fragment_ex_colleghi.*
+
 
 class ExColleghiFragment : Fragment(), ExColleghiAdapter.OnPhotoClickListener {
 
@@ -30,6 +30,7 @@ class ExColleghiFragment : Fragment(), ExColleghiAdapter.OnPhotoClickListener {
     private var mCurrentAnimator: Animator? = null
     private var mShortAnimationDuration: Int = 0
     private var mFLBlur: FrameLayout? = null
+    private var mRv: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +44,12 @@ class ExColleghiFragment : Fragment(), ExColleghiAdapter.OnPhotoClickListener {
         val view = inflater.inflate(R.layout.fragment_ex_colleghi, container, false)
 
         mFLBlur = view.findViewById(R.id.fl_blur)
-        view.findViewById<RecyclerView>(R.id.rv_ex_colleghi)?.adapter = ExColleghiAdapter(listener, this@ExColleghiFragment)
+        mRv = view.findViewById<RecyclerView>(R.id.rv_ex_colleghi)
+        mRv?.adapter = ExColleghiAdapter(listener, this@ExColleghiFragment)
+
+        val resId = R.anim.layout_animation_fall_down
+        val animation = AnimationUtils.loadLayoutAnimation(listener as MainActivity, resId)
+        mRv?.layoutAnimation = animation
 
         return view
     }

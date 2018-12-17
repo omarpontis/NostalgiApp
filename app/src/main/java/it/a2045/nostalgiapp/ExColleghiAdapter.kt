@@ -15,8 +15,6 @@ import it.a2045.nostalgiapp.ExColleghiFragment.OnListFragmentInteractionListener
 import it.a2045.nostalgiapp.models.Collega
 
 import kotlinx.android.synthetic.main.fragment_ex_colleghi_item.view.*
-import android.graphics.Typeface
-
 
 class ExColleghiAdapter(
     private val mListener: OnListFragmentInteractionListener?,

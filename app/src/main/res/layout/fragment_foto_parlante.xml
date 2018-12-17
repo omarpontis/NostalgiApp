@@ -3,6 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container_coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/fragment_background_color"
@@ -19,4 +20,10 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             app:srcCompat="@drawable/ic_message_foto_parlante"/>
+
+    <ImageView
+            android:id="@+id/iv_foto_parlante_expanded"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"/>
 </android.support.design.widget.CoordinatorLayout>

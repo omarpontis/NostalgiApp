@@ -1,24 +1,28 @@
 package it.a2045.nostalgiapp
 
+import android.animation.Animator
+import android.app.Activity
 import android.content.Context
-import android.net.Uri
+import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import it.a2045.nostalgiapp.models.Collega
 import kotlinx.android.synthetic.main.fragment_foto_parlante.*
 import kotlinx.android.synthetic.main.fragment_foto_parlante.view.*
-import java.net.URI
 
 class FotoParlanteFragment : Fragment() {
 
     private var listener: OnFotoParlanteInteractionListener? = null
+    private var mCurrentAnimator: Animator? = null
+    private var mShortAnimationDuration: Int = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mShortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -46,8 +50,11 @@ class FotoParlanteFragment : Fragment() {
             .load((listener as MainActivity).mFotoParlante?.foto)
             .into(view.iv_foto_parlante)
 
-    }
+        iv_foto_parlante.setOnClickListener {
+            startFullScreenImage((listener as MainActivity).mFotoParlante?.foto)
+        }
 
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,4 +78,9 @@ class FotoParlanteFragment : Fragment() {
         super.onPause()
     }
 
+    private fun startFullScreenImage(image: String?) {
+        val intent = Intent(listener as Activity, FullScreenImageActivity::class.java)
+        intent.putExtra(FullScreenImageActivity.IMAGE_URL_EXTRA, image)
+        startActivity(intent)
+    }
 }

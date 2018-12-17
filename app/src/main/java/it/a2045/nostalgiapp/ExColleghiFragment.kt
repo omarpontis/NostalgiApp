@@ -17,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import it.a2045.nostalgiapp.models.Collega
@@ -28,7 +29,7 @@ class ExColleghiFragment : Fragment(), ExColleghiAdapter.OnPhotoClickListener {
     private var listener: OnListFragmentInteractionListener? = null
     private var mCurrentAnimator: Animator? = null
     private var mShortAnimationDuration: Int = 0
-    private var mFLBlur: FrameLayout? = null
+    private var mFLBlur: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +42,7 @@ class ExColleghiFragment : Fragment(), ExColleghiAdapter.OnPhotoClickListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_ex_colleghi, container, false)
 
-        mFLBlur = view.findViewById(R.id.fl_blur)
+        mFLBlur = view.findViewById(R.id.ll_blur)
         view.findViewById<RecyclerView>(R.id.rv_ex_colleghi)?.adapter = ExColleghiAdapter(listener, this@ExColleghiFragment)
 
         return view

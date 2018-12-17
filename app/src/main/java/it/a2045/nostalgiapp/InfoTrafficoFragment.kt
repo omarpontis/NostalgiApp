@@ -82,11 +82,11 @@ class InfoTrafficoFragment : Fragment(), OnMapReadyCallback {
 
         val height = 400
         val width = 400
-        val bdCasaLuigina = resources.getDrawable(R.drawable.casaluigina) as BitmapDrawable
+        val bdCasaLuigina = activity?.getDrawable(R.drawable.casaluigina) as BitmapDrawable
         val bCasaLuigina = bdCasaLuigina.bitmap
         val casaLuiginaMarker = Bitmap.createScaledBitmap(bCasaLuigina, width, height, false)
 
-        val bdTilab = resources.getDrawable(R.drawable.tilabmarker) as BitmapDrawable
+        val bdTilab = activity?.getDrawable(R.drawable.tilabmarker) as BitmapDrawable
         val bTilab = bdTilab.bitmap
         val tilabMarker = Bitmap.createScaledBitmap(bTilab, width, height, false)
 

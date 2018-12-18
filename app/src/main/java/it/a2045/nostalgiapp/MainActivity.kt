@@ -32,7 +32,9 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import java.lang.Thread.sleep
 import kotlin.random.Random
 
-fun Context.toastLong(testo:String) {Toast.makeText(this, testo, Toast.LENGTH_LONG).show()}
+fun Context.toastLong(testo: String) {
+    Toast.makeText(this, testo, Toast.LENGTH_LONG).show()
+}
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     ExColleghiFragment.OnListFragmentInteractionListener,
@@ -57,9 +59,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private val TAG = MainActivity::class.qualifiedName
 
-    private val mExColleghiFragment : ExColleghiFragment = ExColleghiFragment.newInstance()
-    private val mRicordiUfficioFragment : RicordiUfficioFragment = RicordiUfficioFragment.newInstance()
-    private val mInfoTrafficoFragment : InfoTrafficoFragment = InfoTrafficoFragment.newInstance()
+    private val mExColleghiFragment: ExColleghiFragment = ExColleghiFragment.newInstance()
+    private val mRicordiUfficioFragment: RicordiUfficioFragment = RicordiUfficioFragment.newInstance()
+    private val mInfoTrafficoFragment: InfoTrafficoFragment = InfoTrafficoFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +89,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         getRequest()
 
         supportFragmentManager.addOnBackStackChangedListener {
-            if (supportFragmentManager.backStackEntryCount  == 0) {
+            if (supportFragmentManager.backStackEntryCount == 0) {
                 finish()
             }
         }
@@ -245,7 +247,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             if (mInfoTrafficoIndex == -1) {
                 mInfoTrafficoIndex = Random.nextInt(0, listSize.minus(1))
             }
-            mSnackbar = Snackbar.make(findViewById(android.R.id.content), mListaInfoTraffico!!.get(mInfoTrafficoIndex), Snackbar.LENGTH_INDEFINITE)
+            mSnackbar = Snackbar.make(
+                findViewById(android.R.id.content),
+                mListaInfoTraffico!!.get(mInfoTrafficoIndex),
+                Snackbar.LENGTH_INDEFINITE
+            )
             mSnackbar.show()
             mInfoTrafficoIndex = mInfoTrafficoIndex.plus(1).rem(listSize)
         }
